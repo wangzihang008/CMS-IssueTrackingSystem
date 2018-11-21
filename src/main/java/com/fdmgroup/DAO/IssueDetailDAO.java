@@ -25,7 +25,7 @@ public class IssueDetailDAO {
 		em.close();
 	}
 
-	public IssueDetail getIssueDetail(Long id) {
+	public IssueDetail getIssueDetail(long id) {
 		EntityManager em = emf.createEntityManager();
 		IssueDetail returnedIssueDetail = em.find(IssueDetail.class, id);
 		em.close();

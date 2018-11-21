@@ -25,7 +25,7 @@ public class IssueDAO {
 		em.close();
 	}
 
-	public Issue getIssue(Long id) {
+	public Issue getIssue(long id) {
 		EntityManager em = emf.createEntityManager();
 		Issue returnedIssue = em.find(Issue.class, id);
 		em.close();
