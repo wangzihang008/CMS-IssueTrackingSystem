@@ -9,7 +9,7 @@
     http://www.springframework.org/schema/webmvc
     http://www.springframework.org/schema/webmvc/spring-context-3.1.xsd">
 
-	<context:component-scan base-package="com.fdmgroup.web.controllers" />
+	<context:component-scan base-package="com.fdmgroup.Controllers" />
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -35,11 +35,11 @@ public class Issue {
 	private Calendar lastUpdatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User admin;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User createUser;
 
 	@ManyToOne
