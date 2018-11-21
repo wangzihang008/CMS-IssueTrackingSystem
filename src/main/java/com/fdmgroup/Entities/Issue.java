@@ -7,7 +7,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import com.fdmgroup.Enum.Status;
@@ -23,11 +26,12 @@ public class Issue {
 
 	@Id
 	@Column(name = "ISSUE_ID")
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	private String title;
 
+	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
 	private Calendar createDate;
@@ -35,11 +39,11 @@ public class Issue {
 	private Calendar lastUpdatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User admin;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID")
+	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User createUser;
 
 	@ManyToOne
@@ -50,10 +54,9 @@ public class Issue {
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(Long id, String title, Status status, Calendar createDate, Calendar lastUpdatedDate, User admin,
+	public Issue(String title, Status status, Calendar createDate, Calendar lastUpdatedDate, User admin,
 			User createUser, Department department, List<IssueDetail> details) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.status = status;
 		this.createDate = createDate;
@@ -75,11 +78,11 @@ public class Issue {
 				+ ", department=" + department + ", details=" + details + "]";
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -19,6 +19,14 @@ public class UserDAO {
 	@Resource(name = "emfBean")
 	private EntityManagerFactory emf;
 
+	public UserDAO(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	public UserDAO() {
+		
+	}
+	
 	public EntityManagerFactory getEmf() {
 		return emf;
 	}
