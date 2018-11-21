@@ -16,6 +16,14 @@ public class IssueDAO {
 		return emf;
 	}
 	
+	public IssueDAO(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	public IssueDAO() {
+
+	}
+	
 	public void addIssue(Issue issue) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();

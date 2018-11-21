@@ -36,6 +36,8 @@ public class Issue {
 
 	private Calendar createDate;
 
+	private int priority;
+
 	private Calendar lastUpdatedDate;
 
 	@ManyToOne
@@ -54,12 +56,13 @@ public class Issue {
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(String title, Status status, Calendar createDate, Calendar lastUpdatedDate, User admin,
+	public Issue(String title, Status status, Calendar createDate, int priority, Calendar lastUpdatedDate, User admin,
 			User createUser, Department department, List<IssueDetail> details) {
 		super();
 		this.title = title;
 		this.status = status;
 		this.createDate = createDate;
+		this.priority = priority;
 		this.lastUpdatedDate = lastUpdatedDate;
 		this.admin = admin;
 		this.createUser = createUser;
@@ -74,8 +77,8 @@ public class Issue {
 	@Override
 	public String toString() {
 		return "Issue [id=" + id + ", title=" + title + ", status=" + status + ", createDate=" + createDate
-				+ ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin + ", createUser=" + createUser
-				+ ", department=" + department + ", details=" + details + "]";
+				+ ", priority=" + priority + ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin
+				+ ", createUser=" + createUser + ", department=" + department + ", details=" + details + "]";
 	}
 
 	public long getId() {
@@ -158,6 +161,14 @@ public class Issue {
 	public void removeDetail(IssueDetail detail) {
 		details.remove(detail);
 		detail.setIssue(null);
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 }
