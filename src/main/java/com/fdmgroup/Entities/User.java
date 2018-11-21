@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,8 +24,8 @@ public class User {
 
 	@Id
 	@Column(name = "USER_ID")
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	private String username;
 
@@ -51,10 +52,9 @@ public class User {
 	@Column(name = "USER_ISSUES")
 	private List<Issue> issues;
 
-	public User(Long id, String username, String password, Type type, Status status, Department department,
+	public User(String username, String password, Type type, Status status, Department department,
 			String firstName, String lastName, List<Issue> issues) {
 		super();
-		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.type = type;
@@ -69,11 +69,11 @@ public class User {
 		super();
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

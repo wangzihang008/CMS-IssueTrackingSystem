@@ -15,7 +15,7 @@
 		<constructor-arg value="EMF" />
 	</bean>
 
-	<bean id="customerDaoBean"
-		class="com.fdmgroup.Entity.Dao.CustomerDao" />
+	<bean id="userDAOBean"
+		class="com.fdmgroup.DAO.UserDAO" />
 
 </beans>

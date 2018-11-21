@@ -1,6 +1,10 @@
 package com.fdmgroup.DAO;
 
 import java.util.ArrayList;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.User;
 import com.fdmgroup.Entities.Issue;
@@ -11,7 +15,16 @@ public class App {
 
 	public static void main(String[] args) {
 
-		Department newDepartment = new Department(12L, "Techonology", new ArrayList<User>());
-		User newUser = new User(100L, "jimmy66666", "welcome123", Type.BASIC_USER, Status.ASSIGNED, newDepartment, "Jimmy", "Zhou", new ArrayList<Issue>());
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EMF");
+
+		UserDAO uDAO = new UserDAO(emf);
+		DepartmentDAO d = new DepartmentDAO(emf);
+
+		Department tech = new Department("Techonology", new ArrayList<User>());
+		User u1 = new User("jimmy66666", "welcome123", Type.BASIC_USER, Status.ASSIGNED, tech, "Jimmy", "Zhou",
+				new ArrayList<Issue>());
+		d.addDepartment(tech);
+		uDAO.addUser(u1);
+
 	}
 }
