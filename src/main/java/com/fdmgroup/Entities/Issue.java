@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
@@ -40,15 +41,15 @@ public class Issue {
 
 	private Calendar lastUpdatedDate;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User admin;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User createUser;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
@@ -56,18 +57,16 @@ public class Issue {
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(String title, Status status, Calendar createDate, int priority, Calendar lastUpdatedDate, User admin,
-			User createUser, Department department, List<IssueDetail> details) {
+	public Issue(String title, Status status, Calendar createDate, int priority, User admin,
+			User createUser, Department department) {
 		super();
 		this.title = title;
 		this.status = status;
 		this.createDate = createDate;
 		this.priority = priority;
-		this.lastUpdatedDate = lastUpdatedDate;
 		this.admin = admin;
 		this.createUser = createUser;
 		this.department = department;
-		this.details = details;
 	}
 
 	public Issue() {
@@ -111,6 +110,14 @@ public class Issue {
 
 	public void setCreateDate(Calendar createDate) {
 		this.createDate = createDate;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 	public Calendar getLastUpdatedDate() {
@@ -162,13 +169,4 @@ public class Issue {
 		details.remove(detail);
 		detail.setIssue(null);
 	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
-	}
-
 }
