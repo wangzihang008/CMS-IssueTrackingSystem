@@ -22,7 +22,6 @@ public class IssueDetailControllerTest {
 	@Before
 	public void startInjectMocks() {
 		MockitoAnnotations.initMocks(this);
-
 	}
 
 	@Test

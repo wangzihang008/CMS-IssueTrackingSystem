@@ -2,7 +2,6 @@ package com.fdmgroup.Controllers;
 
 import static org.junit.Assert.assertEquals;
 
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -19,151 +18,104 @@ import com.fdmgroup.DAO.UserDAO;
 import com.fdmgroup.Entities.User;
 import com.fdmgroup.Enum.Type;
 
-
-
 public class LoginControllerTest {
-	@Mock //=mock(EntityManagerFactory.class)
+	@Mock
 	private UserDAO uDao;
+
+	@Mock
+	private User mockUser;
+
+	@Mock
+	private HttpSession mockSession;
+
+	@Mock
+	private Model mockModel;
+
 	@InjectMocks
 	private LoginController lc = new LoginController();
-	
+
 	@Before
 	public void startInjectMocks() {
 		MockitoAnnotations.initMocks(this);
-		
+		when(mockUser.getUsername()).thenReturn("ExampleName");
+		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 	}
+
 	@Test
 	public void given_not_logged_in_then_return_GoToLogin() {
-
-		LoginController lc = new LoginController();
-		Model mockModel = mock(Model.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		String nextPage = lc.goToLogin(mockModel,mockSession);
+		String nextPage = lc.goToLogin(mockModel, mockSession);
 		when(mockSession.getAttribute("userName")).thenReturn(null);
 		assertEquals("login", nextPage);
 	}
+
 	@Test
 	public void given_customer_have_logged_in_then_return_customer_page() {
-
-		LoginController lc = new LoginController();
-		Model mockModel = mock(Model.class);
-		HttpSession mockSession = mock(HttpSession.class);
 		when(mockSession.getAttribute("userName")).thenReturn("ExampleName");
-		when(mockSession.getAttribute("userType")).thenReturn(Type.BASIC_USER);
-		String nextPage = lc.goToLogin(mockModel,mockSession);
-		
+		when(mockSession.getAttribute("userType")).thenReturn(Type.CUSTOMER);
+		String nextPage = lc.goToLogin(mockModel, mockSession);
 		assertEquals("dashboard/customer", nextPage);
 	}
+
 	@Test
 	public void given_general_admin_have_logged_in_then_return_admin_page() {
-
-		LoginController lc = new LoginController();
-		Model mockModel = mock(Model.class);
-		HttpSession mockSession = mock(HttpSession.class);
 		when(mockSession.getAttribute("userName")).thenReturn("ExampleName");
-		when(mockSession.getAttribute("userType")).thenReturn(Type.GENERAL_ADMIN);
-		String nextPage = lc.goToLogin(mockModel,mockSession);
-		
+		when(mockSession.getAttribute("userType")).thenReturn(Type.ADMIN);
+		String nextPage = lc.goToLogin(mockModel, mockSession);
 		assertEquals("dashboard/admin", nextPage);
 	}
+
 	@Test
 	public void given_dep_admin_have_logged_in_then_return_depadmin_page() {
-
-		LoginController lc = new LoginController();
-		Model mockModel = mock(Model.class);
-		HttpSession mockSession = mock(HttpSession.class);
 		when(mockSession.getAttribute("userName")).thenReturn("ExampleName");
-		when(mockSession.getAttribute("userType")).thenReturn(Type.DEPARTMENT_ADMIN);
-		String nextPage = lc.goToLogin(mockModel,mockSession);
-		
+		when(mockSession.getAttribute("userType")).thenReturn(Type.DEPADMIN);
+		String nextPage = lc.goToLogin(mockModel, mockSession);
 		assertEquals("dashboard/depadmin", nextPage);
 	}
-	
+
 	@Test
 	public void given_user_does_not_exist_then_return_wrongpassword() {
-		
-		User mockUser = mock(User.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		when(mockUser.getUsername()).thenReturn("ExampleName");
-		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		when(uDao.get("ExampleName")).thenReturn(null);
-		String nextPage = lc.Login(mockUser, mockSession );
-
-
+		String nextPage = lc.Login(mockUser, mockSession);
 		assertEquals("wrongpassword", nextPage);
-
 	}
+
 	@Test
 	public void given_password_is_not_right_then_return_wrongpassword() {
-		
-		User mockUser = mock(User.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		when(mockUser.getUsername()).thenReturn("ExampleName");
-		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		User mockUser2 = mock(User.class);
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePasswordqqqqq");
 		String nextPage = lc.Login(mockUser, mockSession);
-
-
 		assertEquals("wrongpassword", nextPage);
-
 	}
 
 	@Test
-	public void given_type_is_BasicUser_then_goToCustomer() {
-		
-		User mockUser = mock(User.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		when(mockUser.getUsername()).thenReturn("ExampleName");
-		when(mockUser.getPassword()).thenReturn("ExamplePassword");
+	public void given_type_is_Customer_then_goToCustomer() {
 		User mockUser2 = mock(User.class);
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
-		when(mockUser2.getType()).thenReturn(Type.BASIC_USER);
+		when(mockUser2.getType()).thenReturn(Type.CUSTOMER);
 		String nextPage = lc.Login(mockUser, mockSession);
-
-
 		assertEquals("dashboard/customer", nextPage);
-
 	}
+
 	@Test
 	public void given_type_is_Admin_then_goToAdmin() {
-		
-		User mockUser = mock(User.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		when(mockUser.getUsername()).thenReturn("ExampleName");
-		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		User mockUser2 = mock(User.class);
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
-		when(mockUser2.getType()).thenReturn(Type.GENERAL_ADMIN);
+		when(mockUser2.getType()).thenReturn(Type.ADMIN);
 		String nextPage = lc.Login(mockUser, mockSession);
-
-
 		assertEquals("dashboard/admin", nextPage);
-
 	}
 
 	@Test
 	public void given_type_is_DepAdmin_then_goToDepAdmin() {
-		
-		User mockUser = mock(User.class);
-		HttpSession mockSession = mock(HttpSession.class);
-		when(mockUser.getUsername()).thenReturn("ExampleName");
-		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		User mockUser2 = mock(User.class);
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
-		when(mockUser2.getType()).thenReturn(Type.DEPARTMENT_ADMIN);
+		when(mockUser2.getType()).thenReturn(Type.DEPADMIN);
 		String nextPage = lc.Login(mockUser, mockSession);
-
-
 		assertEquals("dashboard/depadmin", nextPage);
-
 	}
-
-
-	
 
 }

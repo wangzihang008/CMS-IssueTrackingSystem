@@ -24,21 +24,17 @@ public class LoginController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToLogin(Model model, HttpSession session) {
 		if (session.getAttribute("userName") != null) {
-			if (session.getAttribute("userType").equals(Type.BASIC_USER)) {
+			if (session.getAttribute("userType").equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
-			}
-			else if (session.getAttribute("userType").equals(Type.GENERAL_ADMIN)) {
+			} else if (session.getAttribute("userType").equals(Type.ADMIN)) {
 				return "dashboard/admin";
-			}
-			else {
+			} else {
 				return "dashboard/depadmin";
 			}
-			
 		} else {
 			model.addAttribute("blank_user_login", new User());
 			return "login";
 		}
-		
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
@@ -46,26 +42,20 @@ public class LoginController {
 		String name = user.getUsername();
 		String password = user.getPassword();
 		User user2 = uDao.get(name);
-		
 
 		if (user2 == null || !user2.getPassword().equals(password)) {
 			return "wrongpassword";
-
 		} else {
 			session.setAttribute("userName", name);
-			session.setAttribute("userId",user2.getId());
-			session.setAttribute("userType",user2.getType());
-			if (user2.getType().equals(Type.BASIC_USER)) {
+			session.setAttribute("userId", user2.getId());
+			session.setAttribute("userType", user2.getType());
+			if (user2.getType().equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
-
-			} else if (user2.getType().equals(Type.GENERAL_ADMIN)) {
+			} else if (user2.getType().equals(Type.ADMIN)) {
 				return "dashboard/admin";
-
 			} else {
 				return "dashboard/depadmin";
-
 			}
 		}
-
 	}
 }
