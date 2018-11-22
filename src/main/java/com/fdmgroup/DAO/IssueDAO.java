@@ -26,14 +26,16 @@ public class IssueDAO {
 	}
 	
 	public IssueDAO(EntityManagerFactory emf) {
+
 		
 		this.emf = emf;
 	}
 	
-	public IssueDAO() {
-		// TODO Auto-generated constructor stub
-	}
 
+	public IssueDAO() {
+
+	}
+	
 	public void addIssue(Issue issue) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();

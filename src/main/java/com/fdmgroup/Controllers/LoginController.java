@@ -3,6 +3,7 @@ package com.fdmgroup.Controllers;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,36 +29,52 @@ public class LoginController {
 	private IssueDAO iDao;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String goToLogin(Model model) {
-		model.addAttribute("blank_user_login", new User());
-		return "login";
+	public String goToLogin(Model model, HttpSession session) {
+		if (session.getAttribute("userName") != null) {
+			if (session.getAttribute("userType").equals(Type.BASIC_USER)) {
+				return "dashboard/customer";
+			} else if (session.getAttribute("userType").equals(Type.GENERAL_ADMIN)) {
+				return "dashboard/admin";
+			} else {
+				return "dashboard/depadmin";
+			}
+
+		} else {
+			model.addAttribute("blank_user_login", new User());
+			return "login";
+		}
+
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String Login(Model model, User user) {
+	public String Login(Model model, User user, HttpSession session) {
 		String name = user.getUsername();
 		String password = user.getPassword();
-		model.addAttribute("blank_user_login", user);
 		User user2 = uDao.get(name);
+		model.addAttribute("blank_login_user", user);
 
 		if (user2 == null || !user2.getPassword().equals(password)) {
 			return "wrongpassword";
 
-		}else if (user2.getType().equals(Type.BASIC_USER)) {
-			return "dashboard/customer";
+		} else {
+			session.setAttribute("userName", name);
+			session.setAttribute("userId", user2.getId());
+			session.setAttribute("userType", user2.getType());
+			if (user2.getType().equals(Type.BASIC_USER)) {
+				return "dashboard/customer";
 
-		}else if (user2.getType().equals(Type.GENERAL_ADMIN)) {
-			return "dashboard/admin";
+			} else if (user2.getType().equals(Type.GENERAL_ADMIN)) {
+				return "dashboard/admin";
 
-		}else {
-
-			User loggedInInUser = uDao.get(user.getUsername());
-			model.addAttribute("active_user", loggedInInUser.getUsername());
-			List<Issue> issues = iDao.getIssuesByDepartment(loggedInInUser.getDepartment());
-			model.addAttribute("issues", issues);
-			return "dashboard/depadmin";
+			} else {
+		
+				model.addAttribute("active_user", user2.getUsername());
+				List<Issue> issues = iDao.getIssuesByDepartment(user2.getDepartment());
+				model.addAttribute("issues", issues);
+				return "dashboard/depadmin";
+			}
 
 		}
-
 	}
+
 }
