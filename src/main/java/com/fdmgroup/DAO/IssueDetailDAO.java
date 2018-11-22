@@ -16,6 +16,14 @@ public class IssueDetailDAO {
 		return emf;
 	}
 	
+	public IssueDetailDAO(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	public IssueDetailDAO() {
+
+	}
+	
 	public void addIssueDetail(IssueDetail issueDetail) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -25,7 +33,7 @@ public class IssueDetailDAO {
 		em.close();
 	}
 
-	public IssueDetail getIssueDetail(Long id) {
+	public IssueDetail getIssueDetail(long id) {
 		EntityManager em = emf.createEntityManager();
 		IssueDetail returnedIssueDetail = em.find(IssueDetail.class, id);
 		em.close();

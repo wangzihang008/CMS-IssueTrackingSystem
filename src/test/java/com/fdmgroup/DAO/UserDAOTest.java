@@ -22,7 +22,6 @@ import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.Entities.User;
 
-
 public class UserDAOTest {
 
 	@Mock
@@ -35,7 +34,7 @@ public class UserDAOTest {
 	private EntityTransaction mockEt;
 
 	@InjectMocks
-	private UserDAO UserDAO = new UserDAO();
+	private UserDAO userDAO = new UserDAO();
 
 	@Before
 	public void startInjectingMocks() {
@@ -46,14 +45,14 @@ public class UserDAOTest {
 
 	@Test
 	public void getEmfTest() {
-		EntityManagerFactory injectedEmf = UserDAO.getEmf();
+		EntityManagerFactory injectedEmf = userDAO.getEmf();
 		assertEquals(mockEmf, injectedEmf);
 	}
 
 	@Test
 	public void adding_User_persists_and_cleans_up_resources() {
 		User mockUser = mock(User.class);
-		UserDAO.addUser(mockUser);
+		userDAO.addUser(mockUser);
 		verify(mockEm).getTransaction();
 		verify(mockEt).begin();
 		verify(mockEm).persist(mockUser);
@@ -63,7 +62,7 @@ public class UserDAOTest {
 
 	@Test
 	public void getting_User_retrieves_User_and_cleans_up_resources() {
-		UserDAO.getUser(100L);
+		userDAO.getUser(100L);
 		InOrder order = inOrder(mockEmf, mockEm);
 		order.verify(mockEmf).createEntityManager();
 		order.verify(mockEm).find(User.class, 100L);
@@ -80,7 +79,7 @@ public class UserDAOTest {
 		when(mockEm.createQuery(str)).thenReturn(query);
 		when(query.getResultList()).thenReturn(mockResult);
 		
-		ArrayList<User> result = UserDAO.getUserByDep(depId);
+		ArrayList<User> result = userDAO.getUserByDep(depId);
 		
 		InOrder order = inOrder(mockEm, query);
 		order.verify(mockEm).createQuery(str);

@@ -11,9 +11,17 @@ import javax.persistence.TypedQuery;
 import com.fdmgroup.Entities.Department;
 
 public class DepartmentDAO {
-	
+
 	@Resource(name = "emfBean")
 	private EntityManagerFactory emf;
+
+	public DepartmentDAO(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	public DepartmentDAO() {
+
+	}
 
 	public EntityManagerFactory getEmf() {
 		return emf;
@@ -27,7 +35,7 @@ public class DepartmentDAO {
 		et.commit();
 		em.close();
 	}
-	
+
 	public Department getDepartment(long id) {
 		EntityManager em = emf.createEntityManager();
 		Department returnedDepartment = em.find(Department.class, id);

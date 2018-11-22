@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,8 +18,8 @@ public class Department {
 
 	@Id
 	@Column(name = "DEPARTMENT_ID")
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	@Column(name = "DEPARTMENT_NAME")
 	private String name;
@@ -27,9 +28,8 @@ public class Department {
 	@Column(name = "LIST_ADMINS")
 	private List<User> admins = new ArrayList<>();
 
-	public Department(Long id, String name, List<User> admins) {
+	public Department(String name, List<User> admins) {
 		super();
-		this.id = id;
 		this.name = name;
 		this.admins = admins;
 	}
@@ -43,11 +43,11 @@ public class Department {
 		return "Department [id=" + id + ", name=" + name + ", admins=" + admins + "]";
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -4,8 +4,11 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,8 +22,8 @@ public class IssueDetail {
 
 	@Id
 	@Column(name = "ISSUE_DETAIL_ID")
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	private String content;
 
@@ -34,11 +37,11 @@ public class IssueDetail {
 	@JoinColumn(name = "ISSUE_ID")
 	private Issue issue;
 
+	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	public IssueDetail(Long id, String content, Calendar createDate, User user, Issue issue, Status status) {
+	public IssueDetail(String content, Calendar createDate, User user, Issue issue, Status status) {
 		super();
-		this.id = id;
 		this.content = content;
 		this.createDate = createDate;
 		this.user = user;
@@ -56,11 +59,11 @@ public class IssueDetail {
 				+ ", issue=" + issue + ", status=" + status + "]";
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

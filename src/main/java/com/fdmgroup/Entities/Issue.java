@@ -7,7 +7,10 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Table;
 
 import com.fdmgroup.Enum.Status;
@@ -23,14 +26,17 @@ public class Issue {
 
 	@Id
 	@Column(name = "ISSUE_ID")
-	@GeneratedValue
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
 	private String title;
 
+	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
 	private Calendar createDate;
+
+	private int priority;
 
 	private Calendar lastUpdatedDate;
 
@@ -50,13 +56,13 @@ public class Issue {
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(Long id, String title, Status status, Calendar createDate, Calendar lastUpdatedDate, User admin,
+	public Issue(String title, Status status, Calendar createDate, int priority, Calendar lastUpdatedDate, User admin,
 			User createUser, Department department, List<IssueDetail> details) {
 		super();
-		this.id = id;
 		this.title = title;
 		this.status = status;
 		this.createDate = createDate;
+		this.priority = priority;
 		this.lastUpdatedDate = lastUpdatedDate;
 		this.admin = admin;
 		this.createUser = createUser;
@@ -71,15 +77,15 @@ public class Issue {
 	@Override
 	public String toString() {
 		return "Issue [id=" + id + ", title=" + title + ", status=" + status + ", createDate=" + createDate
-				+ ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin + ", createUser=" + createUser
-				+ ", department=" + department + ", details=" + details + "]";
+				+ ", priority=" + priority + ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin
+				+ ", createUser=" + createUser + ", department=" + department + ", details=" + details + "]";
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -155,6 +161,14 @@ public class Issue {
 	public void removeDetail(IssueDetail detail) {
 		details.remove(detail);
 		detail.setIssue(null);
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 }

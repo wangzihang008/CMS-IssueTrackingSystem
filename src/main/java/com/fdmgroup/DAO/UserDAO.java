@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
@@ -21,6 +22,14 @@ public class UserDAO {
 	@Resource(name = "emfBean")
 	private EntityManagerFactory emf;
 
+	public UserDAO(EntityManagerFactory emf) {
+		this.emf = emf;
+	}
+
+	public UserDAO() {
+
+	}
+
 	public EntityManagerFactory getEmf() {
 		return emf;
 	}
@@ -34,21 +43,40 @@ public class UserDAO {
 		em.close();
 	}
 
-	public User getUser(Long id) {
+	public User getUser(long id) {
 		EntityManager em = emf.createEntityManager();
 		User returnedUser = em.find(User.class, id);
 		em.close();
 		return returnedUser;
 	}
+	
+	public User get(String username) {
+		EntityManager em = emf.createEntityManager();
+
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u WHERE u.username=:username", User.class);
+		query.setParameter("username", username);
+		List<User> user = query.getResultList();
+		if (user.size() > 0) {
+			em.close();
+            return user.get(0);
+        } else {
+        	em.close();
+            return null;
+        }
+	}
 
 	public void updateUser(User user) {
 		try {
 			PreparedStatement ps = conn.prepareStatement(UPDATE);
-			// need further implementation
-			// ps.setString(1, user.getFirstName());
-			// ps.setString(2, user.getLastName());
-			// ps.setString(3, user.getType().name());
-			// ps.setString(6, user.getPassword());
+
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getPassword());
+			ps.setInt(3, user.getType().ordinal());
+			ps.setInt(4, user.getStatus().ordinal());
+			ps.setLong(5, user.getDepartment().getId());
+			ps.setString(6, user.getFirstName());
+			ps.setString(7, user.getLastName());
+			// issue column needs further implementation
 			ps.executeUpdate();
 			ps.close();
 			System.out.println("User with id " + user.getId() + " was updated in DataBase with following details: "
