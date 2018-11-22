@@ -29,7 +29,7 @@ public class LogoutController {
 		
 
 		@RequestMapping(method = RequestMethod.GET)
-		public String Logout(HttpSession session) {
+		public String goToLogout(HttpSession session) {
 			session.invalidate();
 			return "logout";
 			    
