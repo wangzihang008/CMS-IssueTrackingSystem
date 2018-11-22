@@ -8,8 +8,13 @@
 </head>
 <body>
 	<h2>Welcome to Issue Tracking System</h2>
+
 	
-	<a href = "dashboardDepartAdmin">Dashboard</a>
+	<a href = "dashboard/depadmin">Dashboard</a>
 	
+
+	<a href="login">go to login</a>
+	<h1></h1>
+	<a href="register">go to register</a>
 </body>
 </html>

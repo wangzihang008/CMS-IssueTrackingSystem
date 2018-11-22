@@ -21,7 +21,7 @@ import com.fdmgroup.Enum.Type;
 
 
 @Controller
-//@SessionAttributes(value = "login_user")
+@SessionAttributes(value = "blank_user_login")
 public class DashBoardDepartAdminController {
 	
 	@Resource(name = "issueDAOBean")
@@ -30,23 +30,23 @@ public class DashBoardDepartAdminController {
 	@Resource(name = "userDAOBean")
 	private UserDAO uDao;
 	
-	@RequestMapping(value= "/dashboardDepartAdmin", method=RequestMethod.GET)
-	public String goToDepartAdminDashBoard(Model model) {//, @ModelAttribute(value = "login_user") User user) {
-		// TODO Auto-generated method stub
-		User loggedInInUser = uDao.getUser(22);
-		model.addAttribute("active_user", loggedInInUser.getUsername());
-		List<String> issues = iDao.getIssuesByDepartment(loggedInInUser.getDepartment());	
-		model.addAttribute("issues", issues);
-		return "dashboardDepartAdmin";
+	@RequestMapping(value= "/dashboard/depadmin", method=RequestMethod.GET)
+	public String goToDepartAdminDashBoard() {
+		// TODO Auto-generated method stub	
+		return "dashboard/depadmin";
 	}
 	
 	
-	@RequestMapping(method = RequestMethod.POST)
-	public String manageIssues(Model model, Issue issue) {
+	@RequestMapping(value= "/dashboard/depadmin", method = RequestMethod.POST)
+	public String manageIssues(Model model, Issue issue, @ModelAttribute(value = "blank_user_login") User user) {
 		
 		if (issue.getTitle().equals("")){
 			
-			return "dashboardDepartAdmin";
+			User loggedInInUser = uDao.get(user.getUsername());
+			model.addAttribute("active_user", loggedInInUser.getUsername());
+			List<String> issues = iDao.getIssuesByDepartment(loggedInInUser.getDepartment());	
+			model.addAttribute("issues", issues);
+			return "dashboard/depadmin";
 		
 		}else {
 		

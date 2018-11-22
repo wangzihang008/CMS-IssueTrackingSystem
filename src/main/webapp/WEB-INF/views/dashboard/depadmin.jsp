@@ -23,7 +23,7 @@
 		</c:forEach>
 	</h3>
 
-	<sf:form action = "dashboardDepartAdmin" method = "POST" modelAttribute="selected_issue">
+	<sf:form action = "/IssueTrackingSystem/dashboard/depadmin" method = "POST" modelAttribute="selected_issue">
 		<select name="title">
 			<option value="">---select---</option>
 			<c:forEach items="${issues}" var="individual_issue">
