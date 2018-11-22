@@ -141,4 +141,5 @@ public class User {
 		this.issues = issues;
 	}
 
+	
 }

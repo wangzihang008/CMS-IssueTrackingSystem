@@ -3,11 +3,13 @@ package com.fdmgroup.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import com.fdmgroup.Entities.User;
 
@@ -45,6 +47,21 @@ public class UserDAO {
 		User returnedUser = em.find(User.class, id);
 		em.close();
 		return returnedUser;
+	}
+	
+	public User get(String username) {
+		EntityManager em = emf.createEntityManager();
+
+		TypedQuery<User> query = em.createQuery("SELECT u FROM User AS u WHERE u.username=:username", User.class);
+		query.setParameter("username", username);
+		List<User> user = query.getResultList();
+		if (user.size() > 0) {
+			em.close();
+            return user.get(0);
+        } else {
+        	em.close();
+            return null;
+        }
 	}
 
 	public void updateUser(User user) {
