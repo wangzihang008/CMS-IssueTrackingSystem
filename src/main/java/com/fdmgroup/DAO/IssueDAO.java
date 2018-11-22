@@ -1,10 +1,14 @@
 package com.fdmgroup.DAO;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
+import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.Issue;
 
 public class IssueDAO {
@@ -16,6 +20,15 @@ public class IssueDAO {
 		return emf;
 	}
 	
+	public IssueDAO(EntityManagerFactory emf) {
+		
+		this.emf = emf;
+	}
+	
+	public IssueDAO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void addIssue(Issue issue) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -30,6 +43,15 @@ public class IssueDAO {
 		Issue returnedIssue = em.find(Issue.class, id);
 		em.close();
 		return returnedIssue;
+	}
+	
+	public List<String> getIssuesByDepartment(Department department){
+		
+		EntityManager em = emf.createEntityManager();
+		Query query = em.createQuery(
+				"SELECT title FROM Issue WHERE department_id = '" + department.getId() + "'", String.class);
+		List<String> issues = query.getResultList();
+		return issues;
 	}
 	
 }
