@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div>
-		<a href="issue/register/">Register New Issue</a>
+		<a href="/issue/register/">Register New Issue</a>
 	</div>
 	<div>
 		<h4>All Issues</h4>

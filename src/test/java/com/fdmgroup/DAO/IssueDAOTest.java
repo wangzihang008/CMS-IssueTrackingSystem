@@ -65,4 +65,5 @@ public class IssueDAOTest {
 		order.verify(mockEm).find(Issue.class, 100L);
 		order.verify(mockEm).close();
 	}
+	
 }

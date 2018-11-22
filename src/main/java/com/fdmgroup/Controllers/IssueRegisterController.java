@@ -2,6 +2,7 @@ package com.fdmgroup.Controllers;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,9 +27,9 @@ public class IssueRegisterController {
 	}
 
 	@RequestMapping(method=RequestMethod.POST)
-	public String goToIssueRegister(IssueDetail issueDetail, HttpServletRequest req) {
+	public String goToIssueRegister(IssueDetail issueDetail, HttpServletRequest req, HttpSession session) {
 		// TODO Auto-generated method stub
-		irs.register(issueDetail, req);
+		irs.register(issueDetail, req, session);
 		
 		return "issue/register";
 	}

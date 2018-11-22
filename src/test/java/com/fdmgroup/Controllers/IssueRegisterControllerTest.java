@@ -10,14 +10,16 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import com.fdmgroup.Services.AdminDashboardService;
+import com.fdmgroup.Services.IssueRegisterService;
+
 import static org.mockito.Mockito.*;
 
 public class IssueRegisterControllerTest {
 
-//	@Mock
-//	private AdminDashboardService ads;
-//	@InjectMocks
-//	private AdminDashboardController adc = new AdminDashboardController();
+	@Mock
+	private IssueRegisterService irs;
+	@InjectMocks
+	private IssueRegisterController irc = new IssueRegisterController();
 	
 	@Before
 	public void startInjectionMock() {
@@ -26,7 +28,6 @@ public class IssueRegisterControllerTest {
 	
 	@Test
 	public void Given_IssueRegisterController_When_goToIssueRegister_Then_returnIssueRegisterJspPage() {
-		IssueRegisterController irc = new IssueRegisterController();
 		Model model = mock(Model.class);
 		String nextPage = irc.goToIssueRegister(model);
 		
