@@ -20,9 +20,10 @@ public class IssueRegisterController {
 	private IssueRegisterService irs;
 
 	@RequestMapping(method=RequestMethod.GET)
-	public String goToIssueRegister(Model model) {
+	public String goToIssueRegister(Model model, HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		model.addAttribute("newIssueDetail", new IssueDetail());
+		irs.getAllDepartments(req);
 		return "issue/register";
 	}
 

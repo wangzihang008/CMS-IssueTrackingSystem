@@ -67,6 +67,7 @@ public class IssueDAO {
 		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
 		query.setParameter("admin", adminId);
 		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
 		return result;
 	}
 }

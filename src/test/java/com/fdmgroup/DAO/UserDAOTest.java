@@ -85,6 +85,7 @@ public class UserDAOTest {
 		order.verify(mockEm).createQuery(str);
 		order.verify(query).setParameter("department", depId);
 		order.verify(query).getResultList();
+		order.verify(mockEm).close();
 		assertEquals(result, mockResult);
 	}
 }

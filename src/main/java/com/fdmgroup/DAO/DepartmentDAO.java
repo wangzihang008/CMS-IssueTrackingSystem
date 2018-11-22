@@ -53,12 +53,25 @@ public class DepartmentDAO {
 		Department returnedDepartment = null;
 		TypedQuery<Department> query = 
 				(TypedQuery<Department>) em.createQuery("select d from Department d where d.name=:name");
-		ArrayList<Department> list = (ArrayList<Department>) query.getResultList();
 		query.setParameter("name", name);
+		ArrayList<Department> list = (ArrayList<Department>) query.getResultList();
 		if(!list.isEmpty()) {
 			returnedDepartment = list.get(0);
 		}
 		em.close();
 		return returnedDepartment;
+	}
+	
+	/**
+	 * 
+	 * @return a list of all departments in database
+	 */
+	public ArrayList<Department> getAllDepartment(){
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<Department> query = 
+				(TypedQuery<Department>) em.createQuery("select d from Department d");
+		ArrayList<Department> list = (ArrayList<Department>) query.getResultList();
+		em.close();
+		return list;
 	}
 }
