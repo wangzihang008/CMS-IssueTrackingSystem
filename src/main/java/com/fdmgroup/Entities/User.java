@@ -1,5 +1,6 @@
 package com.fdmgroup.Entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -7,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +40,7 @@ public class User {
 	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
@@ -47,13 +49,13 @@ public class User {
 
 	@Column(name = "LAST_NAME")
 	private String lastName;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@Column(name = "USER_ISSUES")
-	private List<Issue> issues;
 
-	public User(String username, String password, Type type, Status status, Department department,
-			String firstName, String lastName, List<Issue> issues) {
+	@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+	@Column(name = "USER_ISSUES")
+	private List<Issue> issues = new ArrayList<>();
+
+	public User(String username, String password, Type type, Status status, Department department, String firstName,
+			String lastName) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -62,7 +64,6 @@ public class User {
 		this.department = department;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.issues = issues;
 	}
 
 	public User() {
@@ -139,6 +140,16 @@ public class User {
 
 	public void setIssues(List<Issue> issues) {
 		this.issues = issues;
+	}
+
+	public void addIssue(Issue issue) {
+		issues.add(issue);
+		issue.setCreateUser(this);
+	}
+
+	public void removeIssue(Issue issue) {
+		issues.remove(issue);
+		issue.setCreateUser(null);
 	}
 
 }

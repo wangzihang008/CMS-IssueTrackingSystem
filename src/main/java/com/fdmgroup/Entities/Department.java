@@ -24,14 +24,13 @@ public class Department {
 	@Column(name = "DEPARTMENT_NAME")
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
 	@Column(name = "LIST_ADMINS")
 	private List<User> admins = new ArrayList<>();
 
-	public Department(String name, List<User> admins) {
+	public Department(String name) {
 		super();
 		this.name = name;
-		this.admins = admins;
 	}
 
 	public Department() {
