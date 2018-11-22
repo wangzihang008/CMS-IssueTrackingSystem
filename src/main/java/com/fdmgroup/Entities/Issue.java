@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
@@ -73,9 +74,7 @@ public class Issue {
 
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", title=" + title + ", status=" + status + ", createDate=" + createDate
-				+ ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin + ", createUser=" + createUser
-				+ ", department=" + department + ", details=" + details + "]";
+		return "Issue id: "+ id + ", " + title;
 	}
 
 	public long getId() {

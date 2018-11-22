@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fdmgroup.DAO.IssueDAO;
 import com.fdmgroup.DAO.UserDAO;
+import com.fdmgroup.Entities.Issue;
 import com.fdmgroup.Entities.User;
 import com.fdmgroup.Enum.Type;
 
@@ -52,7 +53,7 @@ public class LoginController {
 
 			User loggedInInUser = uDao.get(user.getUsername());
 			model.addAttribute("active_user", loggedInInUser.getUsername());
-			List<String> issues = iDao.getIssuesByDepartment(loggedInInUser.getDepartment());
+			List<Issue> issues = iDao.getIssuesByDepartment(loggedInInUser.getDepartment());
 			model.addAttribute("issues", issues);
 			return "dashboard/depadmin";
 

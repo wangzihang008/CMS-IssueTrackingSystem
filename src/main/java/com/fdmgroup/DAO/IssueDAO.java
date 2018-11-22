@@ -1,5 +1,7 @@
 package com.fdmgroup.DAO;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,6 +12,9 @@ import javax.persistence.Query;
 
 import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.Issue;
+import com.fdmgroup.Entities.IssueDetail;
+import com.fdmgroup.Entities.User;
+import com.fdmgroup.Enum.Status;
 
 public class IssueDAO {
 
@@ -45,13 +50,12 @@ public class IssueDAO {
 		return returnedIssue;
 	}
 	
-	public List<String> getIssuesByDepartment(Department department){
+	public List<Issue> getIssuesByDepartment(Department department){
 		
 		EntityManager em = emf.createEntityManager();
 		Query query = em.createQuery(
-				"SELECT title FROM Issue WHERE department_id = '" + department.getId() + "'", String.class);
-		List<String> issues = query.getResultList();
+				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "'", Issue.class);
+		List<Issue> issues = query.getResultList();
 		return issues;
 	}
-	
 }

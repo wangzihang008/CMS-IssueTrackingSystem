@@ -28,7 +28,7 @@
 
 	<bean id="userDAOBean" class="com.fdmgroup.DAO.UserDAO" />
 	<bean id="issueDAOBean" class="com.fdmgroup.DAO.IssueDAO" />
-	
+	<bean id="issueDetailDAOBean" class="com.fdmgroup.DAO.IssueDetailDAO" />
 	<bean id="departmentDAOBean" class="com.fdmgroup.DAO.DepartmentDAO" />
  
 
