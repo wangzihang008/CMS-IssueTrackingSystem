@@ -12,20 +12,20 @@
 <body>
 	<h2>Register</h2>
 	<sf:form action="issue/register" method="POST"
-		modelAttribute="newIssue">
+		modelAttribute="newIssueDetail">
 		<div>
 			<p>TITLE:</p>
-			<sf:input type="text" placeholder="Input Your Issue Title"
-				path="title" />
+			<input type="text" placeholder="Input Issue Title"
+				name="title" />
 		</div>
 		<div>
-			<p>EMAIL:</p>
-			<sf:input type="text" placeholder="Input Your Email" path="email" />
+			<p>DESCRIPTION:</p>
+			<sf:input type="text" placeholder="Input Issue Detail" path="content" />
 		</div>
 		<div>
-			<p>PASSWORD:</p>
-			<sf:input type="password" placeholder="Input Your Password"
-				path="password" />
+			<p>DEPARTMENT:</p>
+			<input type="text" placeholder="Input Issue Department"
+				name="department" />
 		</div>
 		<input type="submit" value="SUBMIT">
 	</sf:form>
