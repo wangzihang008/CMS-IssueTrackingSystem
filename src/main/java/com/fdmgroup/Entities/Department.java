@@ -25,7 +25,7 @@ public class Department {
 	@Column(name = "DEPARTMENT_NAME")
 	private String name;
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@Column(name = "LIST_ADMINS")
 	private List<User> admins = new ArrayList<>();
 

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -71,6 +72,27 @@ public class IssueDAOTest {
 		order.verify(mockEm).close();
 	}
 	
+	@Test
+	public void When_getIssuesByAdminId_Given_adminId_Then_returnAllIssuesAssignedForAdmin() {
+		String str = "select i from Issue i WHERE i.admin=:admin";
+		TypedQuery<Issue> query = mock(TypedQuery.class);
+		ArrayList<Issue> mockResult = new ArrayList<Issue>();
+		long adminId = 123;
+		
+		when(mockEm.createQuery(str)).thenReturn(query);
+		when(query.getResultList()).thenReturn(mockResult);
+		
+		ArrayList<Issue> result = IssueDAO.getIssuesByAdminId(adminId);
+		
+		InOrder order = inOrder(mockEmf, mockEm, query);
+		order.verify(mockEmf).createEntityManager();
+		order.verify(mockEm).createQuery(str);
+		order.verify(query).setParameter("admin", adminId);
+		order.verify(query).getResultList();
+		order.verify(mockEm).close();
+		assertEquals(mockResult, result);
+	}
+
 	@Test
 	public void test_GettingIssuesByDepartment_thenReturn_CorrectIssues() {
 		

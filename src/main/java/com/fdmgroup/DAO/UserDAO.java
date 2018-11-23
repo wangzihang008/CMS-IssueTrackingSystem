@@ -3,6 +3,7 @@ package com.fdmgroup.DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -83,5 +84,19 @@ public class UserDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * 
+	 * @param depId
+	 * @return return all admins who work in the department with department id
+	 */
+	public ArrayList<User> getUserByDep(long depId){
+		EntityManager em = emf.createEntityManager();
+		TypedQuery<User> query = (TypedQuery<User>) em.createQuery("select u from User u where u.department=:department");
+		query.setParameter("department", depId);
+		ArrayList<User> result = (ArrayList<User>) query.getResultList();
+		em.close();
+		return result;
 	}
 }
