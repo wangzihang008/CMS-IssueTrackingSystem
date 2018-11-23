@@ -25,14 +25,13 @@ public class Department {
 	@Column(name = "DEPARTMENT_NAME")
 	private String name;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@Column(name = "LIST_ADMINS")
 	private List<User> admins = new ArrayList<>();
 
-	public Department(String name, List<User> admins) {
+	public Department(String name) {
 		super();
 		this.name = name;
-		this.admins = admins;
 	}
 
 	public Department() {
@@ -66,6 +65,16 @@ public class Department {
 
 	public void setAdmins(List<User> admins) {
 		this.admins = admins;
+	}
+	
+	public void addAdmin(User admin) {
+		admins.add(admin);
+		admin.setDepartment(this);
+	}
+
+	public void removeAdmin(User admin) {
+		admins.remove(admin);
+		admin.setDepartment(null);
 	}
 
 }

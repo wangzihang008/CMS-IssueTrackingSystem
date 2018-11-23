@@ -21,7 +21,7 @@ public class AdminDashboardController {
 	@RequestMapping(value="dashboard/admin", method=RequestMethod.GET)
 	public String goToAdminDashboard(HttpSession session, Model model) {
 		// TODO Auto-generated method stub
-		if(session.getAttribute("userType").equals(Type.GENERAL_ADMIN)) {
+		if(session.getAttribute("userType").equals(Type.ADMIN)) {
 			if(!ads.getAllIssues().isEmpty()) {
 				model.addAttribute("issues", ads.getAllIssues());
 			}
