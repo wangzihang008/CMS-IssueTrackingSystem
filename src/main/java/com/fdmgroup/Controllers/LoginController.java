@@ -34,7 +34,6 @@ public class LoginController {
 			if (session.getAttribute("userType").equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
 			} else if (session.getAttribute("userType").equals(Type.ADMIN)) {
-
 				return "dashboard/admin";
 			} else {
 				return "dashboard/depadmin";
@@ -52,21 +51,23 @@ public class LoginController {
 		String name = user.getUsername();
 		String password = user.getPassword();
 		User user2 = uDao.get(name);
-
 		model.addAttribute("blank_login_user", user);
+
 		if (user2 == null || !user2.getPassword().equals(password)) {
 			return "wrongpassword";
+
 		} else {
 			session.setAttribute("userName", name);
 			session.setAttribute("userId", user2.getId());
 			session.setAttribute("userType", user2.getType());
 			if (user2.getType().equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
+
 			} else if (user2.getType().equals(Type.ADMIN)) {
 				return "dashboard/admin";
+
 			} else {
-				
-				System.out.println(user2.getDepartment());
+		
 				model.addAttribute("active_user", user2.getUsername());
 				List<Issue> issues = iDao.getIssuesByDepartment(user2.getDepartment());
 				model.addAttribute("issues", issues);
@@ -77,4 +78,3 @@ public class LoginController {
 	}
 
 }
-
