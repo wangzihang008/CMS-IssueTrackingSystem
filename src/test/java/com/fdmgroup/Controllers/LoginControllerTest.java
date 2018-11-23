@@ -159,7 +159,6 @@ public class LoginControllerTest {
 
 		
 		verify(mockModel).addAttribute("active_user", mockUser2.getUsername());
-		verify(iDao).getIssuesByDepartment(mockUser2.getDepartment());
 		verify(mockModel).addAttribute("issues", null);
 		assertEquals("dashboard/depadmin", nextPage);
 	}
