@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Table;
@@ -57,16 +56,18 @@ public class Issue {
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(String title, Status status, Calendar createDate, int priority, User admin,
-			User createUser, Department department) {
+	public Issue(String title, Status status, Calendar createDate, int priority, Calendar lastUpdatedDate, User admin,
+			User createUser, Department department, List<IssueDetail> details) {
 		super();
 		this.title = title;
 		this.status = status;
 		this.createDate = createDate;
 		this.priority = priority;
+		this.lastUpdatedDate = lastUpdatedDate;
 		this.admin = admin;
 		this.createUser = createUser;
 		this.department = department;
+		this.details = details;
 	}
 
 	public Issue() {
@@ -110,14 +111,6 @@ public class Issue {
 
 	public void setCreateDate(Calendar createDate) {
 		this.createDate = createDate;
-	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
 	}
 
 	public Calendar getLastUpdatedDate() {
@@ -169,4 +162,13 @@ public class Issue {
 		details.remove(detail);
 		detail.setIssue(null);
 	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
 }

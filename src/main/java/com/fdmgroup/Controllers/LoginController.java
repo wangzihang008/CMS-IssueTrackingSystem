@@ -65,7 +65,8 @@ public class LoginController {
 			} else if (user2.getType().equals(Type.ADMIN)) {
 				return "dashboard/admin";
 			} else {
-		
+				
+				System.out.println(user2.getDepartment());
 				model.addAttribute("active_user", user2.getUsername());
 				List<Issue> issues = iDao.getIssuesByDepartment(user2.getDepartment());
 				model.addAttribute("issues", issues);

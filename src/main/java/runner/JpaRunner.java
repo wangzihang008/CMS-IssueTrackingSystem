@@ -41,13 +41,19 @@ public class JpaRunner {
 		dDao.addDepartment(d2);
 		dDao.addDepartment(d3);
 		*/
-		IssueDAO iDao = new IssueDAO(emf);
-		IssueDetailDAO idDao = new IssueDetailDAO(emf);
+		Department d1 = new Department("technical");
+		DepartmentDAO dDao = new DepartmentDAO(emf);
+		dDao.addDepartment(d1);
+		User u1 = new User("qzz", "qzz", Type.DEPADMIN, Status.UNASSIGNED, d1,
+				"q", "z");
+		//IssueDAO iDao = new IssueDAO(emf);
+		//IssueDetailDAO idDao = new IssueDetailDAO(emf);
 		UserDAO uDao = new UserDAO(emf);
-		Issue i = iDao.getIssue(23);
-		User u = uDao.get("qz");
+		uDao.addUser(u1);
+		//Issue i = iDao.getIssue(23);
+		//User u = uDao.get("qz");
 		//IssueDetail id = new IssueDetail("ccc", Calendar.getInstance(), u, i, null);
-		System.out.println(idDao.getIssueDetailsByIssue(i));
+		//System.out.println(idDao.getIssueDetailsByIssue(i));
 		//iDao.addDetail(i, "dddd", u);
 		//Issue i1 = new Issue("aaaaaaa", Status.ASSIGNED, Calendar.getInstance(), Calendar.getInstance(), null,
 		//		null, d1, null);
