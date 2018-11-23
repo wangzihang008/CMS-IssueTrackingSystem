@@ -1,11 +1,20 @@
 package com.fdmgroup.DAO;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 
+import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.Issue;
+import com.fdmgroup.Entities.IssueDetail;
+import com.fdmgroup.Entities.User;
+import com.fdmgroup.Enum.Status;
 
 public class IssueDAO {
 
@@ -14,6 +23,17 @@ public class IssueDAO {
 
 	public EntityManagerFactory getEmf() {
 		return emf;
+	}
+	
+	public IssueDAO(EntityManagerFactory emf) {
+
+		
+		this.emf = emf;
+	}
+	
+
+	public IssueDAO() {
+
 	}
 	
 	public void addIssue(Issue issue) {
@@ -32,4 +52,12 @@ public class IssueDAO {
 		return returnedIssue;
 	}
 	
+	public List<Issue> getIssuesByDepartment(Department department){
+		
+		EntityManager em = emf.createEntityManager();
+		Query query = em.createQuery(
+				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "'", Issue.class);
+		List<Issue> issues = query.getResultList();
+		return issues;
+	}
 }

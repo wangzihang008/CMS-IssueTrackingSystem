@@ -6,6 +6,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.List;
+
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -17,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.Issue;
 
 public class IssueDAOTest {
@@ -64,5 +69,23 @@ public class IssueDAOTest {
 		order.verify(mockEmf).createEntityManager();
 		order.verify(mockEm).find(Issue.class, 100L);
 		order.verify(mockEm).close();
+	}
+	
+	@Test
+	public void test_GettingIssuesByDepartment_thenReturn_CorrectIssues() {
+		
+		//arrange
+		//Issue mockIssue = mock(Issue.class);
+		TypedQuery<Issue> mockQuery = mock(TypedQuery.class);
+		Department mockDepartment = mock(Department.class);
+		when(mockDepartment.getId()).thenReturn(21L);
+		when(mockEm.createQuery("SELECT i FROM Issue i WHERE department_id = '" + mockDepartment.getId() + "'", Issue.class)).thenReturn(mockQuery);
+		when(mockQuery.getResultList()).thenReturn(null);
+		
+		//act
+		List<Issue> issuesByDepartment = IssueDAO.getIssuesByDepartment(mockDepartment);
+		
+		//assert
+		assertEquals(issuesByDepartment, null);
 	}
 }
