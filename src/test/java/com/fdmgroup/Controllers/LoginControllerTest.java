@@ -87,7 +87,8 @@ public class LoginControllerTest {
 		when(uDao.get("ExampleName")).thenReturn(null);
 		String nextPage = lc.Login(mockModel, mockUser, mockSession );
 
-		assertEquals("wrongpassword", nextPage);
+		mockModel.addAttribute("fail_msg", "Invalid username or password");
+		assertEquals("login", nextPage);
 	}
 
 	@Test
@@ -103,7 +104,8 @@ public class LoginControllerTest {
 		when(mockUser2.getPassword()).thenReturn("ExamplePasswordqqqqq");
 		String nextPage = lc.Login(mockModel, mockUser, mockSession);
 
-		assertEquals("wrongpassword", nextPage);
+		mockModel.addAttribute("fail_msg", "Invalid username or password");
+		assertEquals("login", nextPage);
 	}
 
 	@Test

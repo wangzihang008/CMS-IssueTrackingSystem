@@ -15,6 +15,8 @@
 		Password: <sf:input path = "password" type = "password" />
 		<input type = "submit" value = "login!"/>
 	</sf:form>
+	
+	<span style="color: red;">${fail_msg}</span>
 
 </body>
 </html>

@@ -47,12 +47,15 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String Login(Model model, User user, HttpSession session) {
+		
+		model.addAttribute("blank_user_login", user);
 		String name = user.getUsername();
 		String password = user.getPassword();
 		User user2 = uDao.get(name);
 
 		if (user2 == null || !user2.getPassword().equals(password)) {
-			return "wrongpassword";
+			model.addAttribute("fail_msg", "Invalid username or password");
+			return "login";
 
 		} else {
 			session.setAttribute("userName", name);
