@@ -6,9 +6,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,5 +67,26 @@ public class IssueDAOTest {
 		order.verify(mockEmf).createEntityManager();
 		order.verify(mockEm).find(Issue.class, 100L);
 		order.verify(mockEm).close();
+	}
+	
+	@Test
+	public void When_getIssuesByAdminId_Given_adminId_Then_returnAllIssuesAssignedForAdmin() {
+		String str = "select i from Issue i WHERE i.admin=:admin";
+		TypedQuery<Issue> query = mock(TypedQuery.class);
+		ArrayList<Issue> mockResult = new ArrayList<Issue>();
+		long adminId = 123;
+		
+		when(mockEm.createQuery(str)).thenReturn(query);
+		when(query.getResultList()).thenReturn(mockResult);
+		
+		ArrayList<Issue> result = IssueDAO.getIssuesByAdminId(adminId);
+		
+		InOrder order = inOrder(mockEmf, mockEm, query);
+		order.verify(mockEmf).createEntityManager();
+		order.verify(mockEm).createQuery(str);
+		order.verify(query).setParameter("admin", adminId);
+		order.verify(query).getResultList();
+		order.verify(mockEm).close();
+		assertEquals(mockResult, result);
 	}
 }

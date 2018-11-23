@@ -6,9 +6,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -66,4 +69,23 @@ public class UserDAOTest {
 		order.verify(mockEm).close();
 	}
 	
+	@Test
+	public void When_getUserByDep_Given_depId_Then_returnListOfUser() {
+		TypedQuery<User> query = mock(TypedQuery.class);
+		ArrayList<User> mockResult = new ArrayList<User>();
+		String str = "select u from User u where u.department=:department";
+		long depId = 123;
+		
+		when(mockEm.createQuery(str)).thenReturn(query);
+		when(query.getResultList()).thenReturn(mockResult);
+		
+		ArrayList<User> result = userDAO.getUserByDep(depId);
+		
+		InOrder order = inOrder(mockEm, query);
+		order.verify(mockEm).createQuery(str);
+		order.verify(query).setParameter("department", depId);
+		order.verify(query).getResultList();
+		order.verify(mockEm).close();
+		assertEquals(result, mockResult);
+	}
 }

@@ -65,7 +65,7 @@ public class Department {
 	public void setAdmins(List<User> admins) {
 		this.admins = admins;
 	}
-	
+
 	public void addAdmin(User admin) {
 		admins.add(admin);
 		admin.setDepartment(this);

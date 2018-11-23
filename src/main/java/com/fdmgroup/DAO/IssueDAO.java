@@ -1,9 +1,12 @@
 package com.fdmgroup.DAO;
 
+import java.util.ArrayList;
+
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
 import com.fdmgroup.Entities.Issue;
 
@@ -39,5 +42,32 @@ public class IssueDAO {
 		em.close();
 		return returnedIssue;
 	}
+
+	/**
+	 * 
+	 * @return All Issues In DataBase
+	 */
+	public ArrayList<Issue> getAllIssue() {
+		// TODO Auto-generated method stub
+		EntityManager em = emf.createEntityManager();
+		String str = "select i from Issue i";
+		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
+		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		return result;
+	}
 	
+	/**
+	 * 
+	 * @param adminId
+	 * @return a list of issue, given admin id
+	 */
+	public ArrayList<Issue> getIssuesByAdminId(long adminId){
+		EntityManager em = emf.createEntityManager();
+		String str = "select i from Issue i WHERE i.admin=:admin";
+		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
+		query.setParameter("admin", adminId);
+		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
+		return result;
+	}
 }
