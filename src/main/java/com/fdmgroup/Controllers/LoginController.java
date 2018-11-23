@@ -31,9 +31,9 @@ public class LoginController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToLogin(Model model, HttpSession session) {
 		if (session.getAttribute("userName") != null) {
-			if (session.getAttribute("userType").equals(Type.BASIC_USER)) {
+			if (session.getAttribute("userType").equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
-			} else if (session.getAttribute("userType").equals(Type.GENERAL_ADMIN)) {
+			} else if (session.getAttribute("userType").equals(Type.ADMIN)) {
 				return "dashboard/admin";
 			} else {
 				return "dashboard/depadmin";
@@ -60,10 +60,10 @@ public class LoginController {
 			session.setAttribute("userName", name);
 			session.setAttribute("userId", user2.getId());
 			session.setAttribute("userType", user2.getType());
-			if (user2.getType().equals(Type.BASIC_USER)) {
+			if (user2.getType().equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
 
-			} else if (user2.getType().equals(Type.GENERAL_ADMIN)) {
+			} else if (user2.getType().equals(Type.ADMIN)) {
 				return "dashboard/admin";
 
 			} else {
