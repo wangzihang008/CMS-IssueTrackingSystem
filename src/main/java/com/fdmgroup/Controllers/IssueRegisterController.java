@@ -28,20 +28,9 @@ public class IssueRegisterController {
 	public String goToIssueRegister(Model model, HttpServletRequest req) {
 		// TODO Auto-generated method stub
 		model.addAttribute("registerIssue", new Issue());
-//		map.addAttribute("newIssueDetail", new IssueDetail());
 		irs.getAllDepartments(req);
 		return "issue/register";
 	}
-
-//	@RequestMapping(method=RequestMethod.POST)
-//	public String goToIssueRegister(@ModelAttribute("Issue") Issue issue, HttpServletRequest req, HttpSession session) {
-//		// TODO Auto-generated method stub
-//		
-//		System.out.println("**************" + issue + "********************");
-//		String forward = irs.register(issue, req, session);
-//		
-//		return forward;
-//	}
 	
 	@RequestMapping(method=RequestMethod.POST)
 	public String goToIssueRegister(@RequestParam String title, @RequestParam String content,

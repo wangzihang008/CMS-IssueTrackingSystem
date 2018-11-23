@@ -79,7 +79,7 @@ public class IssueRegisterService {
 			
 			issueDao.addIssue(issue);
 			req.setAttribute("message", "Issue created successful");
-			result = "dashboard";
+			result = "dashboard/customer";
 		}
 		return result;
 	}
