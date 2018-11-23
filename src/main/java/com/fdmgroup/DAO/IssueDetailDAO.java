@@ -1,10 +1,14 @@
 package com.fdmgroup.DAO;
 
+import java.util.ArrayList;
+
 import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 
+import com.fdmgroup.Entities.IssueDetail;
 import com.fdmgroup.Entities.IssueDetail;
 
 public class IssueDetailDAO {
@@ -15,7 +19,7 @@ public class IssueDetailDAO {
 	public EntityManagerFactory getEmf() {
 		return emf;
 	}
-	
+
 	public IssueDetailDAO(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
@@ -23,7 +27,7 @@ public class IssueDetailDAO {
 	public IssueDetailDAO() {
 
 	}
-	
+
 	public void addIssueDetail(IssueDetail issueDetail) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -38,5 +42,15 @@ public class IssueDetailDAO {
 		IssueDetail returnedIssueDetail = em.find(IssueDetail.class, id);
 		em.close();
 		return returnedIssueDetail;
+	}
+
+	public ArrayList<IssueDetail> getIssueDetailsByIssueId(long issueId) {
+		EntityManager em = emf.createEntityManager();
+		String str = "select id from IssueDetail id WHERE id.issue=:issue";
+		TypedQuery<IssueDetail> query = (TypedQuery<IssueDetail>) em.createQuery(str);
+		query.setParameter("issue", issueId);
+		ArrayList<IssueDetail> result = (ArrayList<IssueDetail>) query.getResultList();
+		em.close();
+		return result;
 	}
 }

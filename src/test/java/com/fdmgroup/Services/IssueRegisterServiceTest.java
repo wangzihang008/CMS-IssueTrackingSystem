@@ -1,6 +1,5 @@
 package com.fdmgroup.Services;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Before;
