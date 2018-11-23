@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import static org.mockito.Mockito.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import com.fdmgroup.DAO.IssueDAO;
 import com.fdmgroup.DAO.UserDAO;
 import com.fdmgroup.Entities.User;
+import com.fdmgroup.Enum.Status;
 import com.fdmgroup.Enum.Type;
 
 public class LoginControllerTest {
@@ -31,6 +33,9 @@ public class LoginControllerTest {
 
 	@Mock
 	private Model mockModel;
+	
+	@Mock
+	private HttpServletRequest mockRequest;
 
 	@Mock
 	private IssueDAO iDao;
@@ -85,7 +90,7 @@ public class LoginControllerTest {
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		when(uDao.get("ExampleName")).thenReturn(null);
-		String nextPage = lc.Login(mockModel, mockUser, mockSession );
+		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest );
 
 		mockModel.addAttribute("fail_msg", "Invalid username or password");
 		assertEquals("login", nextPage);
@@ -102,7 +107,7 @@ public class LoginControllerTest {
 		User mockUser2 = mock(User.class);
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePasswordqqqqq");
-		String nextPage = lc.Login(mockModel, mockUser, mockSession);
+		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
 
 		mockModel.addAttribute("fail_msg", "Invalid username or password");
 		assertEquals("login", nextPage);
@@ -120,7 +125,8 @@ public class LoginControllerTest {
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
 		when(mockUser2.getType()).thenReturn(Type.CUSTOMER);
-		String nextPage = lc.Login(mockModel, mockUser, mockSession);
+		when(mockUser2.getStatus()).thenReturn(Status.ACTIVE);
+		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
 
 		assertEquals("dashboard/customer", nextPage);
 	}
@@ -137,7 +143,8 @@ public class LoginControllerTest {
 		when(uDao.get("ExampleName")).thenReturn(mockUser2);
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
 		when(mockUser2.getType()).thenReturn(Type.ADMIN);
-		String nextPage = lc.Login(mockModel, mockUser, mockSession);
+		when(mockUser2.getStatus()).thenReturn(Status.ACTIVE);
+		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
 
 		assertEquals("dashboard/admin", nextPage);
 	}
@@ -156,13 +163,36 @@ public class LoginControllerTest {
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
 		when(mockUser2.getType()).thenReturn(Type.DEPADMIN);
 		when(mockUser2.getDepartment()).thenReturn(null);
+		when(mockUser2.getStatus()).thenReturn(Status.ACTIVE);
 		when(iDao.getIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
-		String nextPage = lc.Login(mockModel, mockUser, mockSession);
+		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
 
 		
 		verify(mockModel).addAttribute("active_user", mockUser2.getUsername());
 		verify(mockModel).addAttribute("issues", null);
 		assertEquals("dashboard/depadmin", nextPage);
+	}
+	
+	@Test
+	public void given_customer_user_is_inactive_then_show_error_msg() {
+		
+		User mockUser = mock(User.class);
+		Model mockModel = mock(Model.class);
+		HttpSession mockSession = mock(HttpSession.class);
+		when(mockUser.getUsername()).thenReturn("ExampleName");
+		when(mockUser.getPassword()).thenReturn("ExamplePassword");
+		User mockUser2 = mock(User.class);
+		when(uDao.get("ExampleName")).thenReturn(mockUser2);
+		when(mockUser2.getUsername()).thenReturn("qz");
+		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
+		when(mockUser2.getType()).thenReturn(Type.DEPADMIN);
+		when(mockUser2.getDepartment()).thenReturn(null);
+		when(mockUser2.getStatus()).thenReturn(Status.INACTIVE);
+		when(iDao.getIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
+		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
+
+		
+		assertEquals("login", nextPage);
 	}
 
 }

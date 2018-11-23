@@ -22,6 +22,10 @@ public class RegisterControllerTest {
 	
 	@Mock 
 	private UserDAO uDao;
+	
+	@Mock
+	private Model mockModel;
+	
 	@InjectMocks
 	private RegisterController rc = new RegisterController();
 	
@@ -47,10 +51,10 @@ public class RegisterControllerTest {
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("");
 		when(uDao.get("")).thenReturn(null);
-		String nextPage = rc.Register(mockUser);
+		String nextPage = rc.Register(mockUser, mockModel);
 
-
-		assertEquals("failure", nextPage);
+		verify(mockModel).addAttribute("fail_msg", "Invalid username or user has existed");
+		assertEquals("register", nextPage);
 
 	}
 
@@ -61,10 +65,10 @@ public class RegisterControllerTest {
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		when(uDao.get("ExampleName")).thenReturn(new User());
-		String nextPage = rc.Register(mockUser);
+		String nextPage = rc.Register(mockUser, mockModel);
 
-
-		assertEquals("failure", nextPage);
+		verify(mockModel).addAttribute("fail_msg", "Invalid username or user has existed");
+		assertEquals("register", nextPage);
 
 	}
 
@@ -74,10 +78,10 @@ public class RegisterControllerTest {
 		when(mockUser.getUsername()).thenReturn("");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		when(uDao.get("")).thenReturn(null);
-		String nextPage = rc.Register(mockUser);
+		String nextPage = rc.Register(mockUser, mockModel);
 
-
-		assertEquals("failure", nextPage);
+		verify(mockModel).addAttribute("fail_msg", "Invalid username or user has existed");
+		assertEquals("register", nextPage);
 	}
 	
 	@Test
@@ -87,7 +91,7 @@ public class RegisterControllerTest {
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		when(uDao.get("ExampleName")).thenReturn(null);
-		String nextPage = rc.Register(mockUser);
+		String nextPage = rc.Register(mockUser, mockModel);
 
 
 		assertEquals("index", nextPage);

@@ -13,9 +13,10 @@
 	<h2>Register here</h2>
 	<sf:form action = "register" method = "Post" modelAttribute = "user_register">
 		Username: <sf:input path = "username" type = "text" />
-		Password: <sf:input path = "password" type = "text" />
+		Password: <sf:input path = "password" type = "password" />
 		<input type = "submit" value = "register!"/>
 	</sf:form>
-
+	
+	<span style="color: red;">${fail_msg}</span>
 </body>
 </html>
