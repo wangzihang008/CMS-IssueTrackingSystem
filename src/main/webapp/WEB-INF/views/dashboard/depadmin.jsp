@@ -33,5 +33,7 @@
 		<input type="submit" value="manage this issue">
 	</sf:form>
 	
+	<span style="color: red;">${msg}</span>
+	
 </body>
 </html>

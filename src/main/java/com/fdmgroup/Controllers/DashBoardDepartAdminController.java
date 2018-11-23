@@ -3,6 +3,7 @@ package com.fdmgroup.Controllers;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ import com.fdmgroup.Enum.Type;
 
 
 @Controller
-@SessionAttributes(value = {"blank_user_login", "active_issue"})
+@SessionAttributes(value = {"active_issue"})
 public class DashBoardDepartAdminController {
 	
 	@Resource(name = "issueDAOBean")
@@ -43,20 +44,21 @@ public class DashBoardDepartAdminController {
 	
 	
 	@RequestMapping(value= "/dashboard/depadmin", method = RequestMethod.POST)
-	public String checkIssues(Model model, Issue issue, @ModelAttribute(value = "blank_user_login") User user) {
+	public String checkIssues(Model model, Issue issue, HttpSession session) {
 		
 		if (issue.getTitle().equals("")){
 			
-			User loggedInInUser = uDao.get(user.getUsername());
+			String username = (String) session.getAttribute("userName");
+			User loggedInInUser = uDao.get(username);
 			model.addAttribute("active_user", loggedInInUser.getUsername());
 			List<Issue> issues = iDao.getIssuesByDepartment(loggedInInUser.getDepartment());	
 			model.addAttribute("issues", issues);
+			model.addAttribute("msg", "please select an issue");
 			return "dashboard/depadmin";
 		
 		}else {
 			
 			
-			//issue.setId(generateId(issue));
 			Issue accessedIssue = iDao.getIssue(generateId(issue));
 			model.addAttribute("active_issue", accessedIssue);
 			List<IssueDetail> details = idDao.getIssueDetailsByIssue(accessedIssue);

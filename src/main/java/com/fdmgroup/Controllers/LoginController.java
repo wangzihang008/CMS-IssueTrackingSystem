@@ -19,7 +19,6 @@ import com.fdmgroup.Enum.Type;
 
 @Controller
 @RequestMapping(value = "/login")
-@SessionAttributes(value = "blank_user_login")
 public class LoginController {
 
 	@Resource(name = "userDAOBean")
@@ -51,7 +50,6 @@ public class LoginController {
 		String name = user.getUsername();
 		String password = user.getPassword();
 		User user2 = uDao.get(name);
-		model.addAttribute("blank_login_user", user);
 
 		if (user2 == null || !user2.getPassword().equals(password)) {
 			return "wrongpassword";
