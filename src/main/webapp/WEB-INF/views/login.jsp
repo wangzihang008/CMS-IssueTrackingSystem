@@ -12,7 +12,7 @@
 	<h2>Login here</h2>
 	<sf:form action = "login" method = "Post" modelAttribute = "blank_user_login">
 		Username: <sf:input path = "username" type = "text" />
-		Password: <sf:input path = "password" type = "text" />
+		Password: <sf:input path = "password" type = "password" />
 		<input type = "submit" value = "login!"/>
 	</sf:form>
 

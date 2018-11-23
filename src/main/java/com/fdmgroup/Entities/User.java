@@ -152,4 +152,10 @@ public class User {
 		issue.setCreateUser(null);
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", type=" + type + ", status="
+				+ status + ", department=" + department + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", issues=" + issues + "]";
+	}
 }

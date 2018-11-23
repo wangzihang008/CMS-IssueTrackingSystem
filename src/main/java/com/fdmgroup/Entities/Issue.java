@@ -75,9 +75,9 @@ public class Issue {
 
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", title=" + title + ", status=" + status + ", createDate=" + createDate
-				+ ", priority=" + priority + ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin
-				+ ", createUser=" + createUser + ", department=" + department + ", details=" + details + "]";
+
+		return "Issue id: "+ id + ", " + title;
+
 	}
 
 	public long getId() {
