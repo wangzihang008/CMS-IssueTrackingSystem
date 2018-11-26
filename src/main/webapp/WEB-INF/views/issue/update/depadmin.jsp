@@ -19,10 +19,10 @@
 	<h4>What do you want to do...</h4>
 	
 	<a href="http://localhost:8088/IssueTrackingSystem/issue/reject">reject this issue</a>
-	<a href="http://localhost:8088/IssueTrackingSystem/issue/update/addNewIssueDetailDepartAdmin">add a new detail</a>
-	<%-- <sf:form action = "http://localhost:8088/IssueTrackingSystem/issue/update/depadmin" method = "Post" modelAttribute = "new_issue_detail">
-		<sf:input path = "content" type = "text" />
-		<input type = "submit" value = "Add a new detail"/>
-	</sf:form> --%>
+	<a href="http://localhost:8088/IssueTrackingSystem/issue/request">request a reassignment</a>
+	<a href="http://localhost:8088/IssueTrackingSystem/issue/addDetailDepartAdmin">add a new detail</a>
+	<br>
+	<a href="http://localhost:8088/IssueTrackingSystem/dashboard/depadmin">back to dashboard</a>
+	
 </body>
 </html>

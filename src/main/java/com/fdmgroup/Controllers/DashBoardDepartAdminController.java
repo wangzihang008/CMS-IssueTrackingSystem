@@ -37,8 +37,13 @@ public class DashBoardDepartAdminController {
 	private IssueDetailDAO idDao;
 	
 	@RequestMapping(value= "/dashboard/depadmin", method=RequestMethod.GET)
-	public String goToDepartAdminDashBoard(Model model) {
+	public String goToDepartAdminDashBoard(Model model, HttpSession session) {
 		// TODO Auto-generated method stub	
+		String username = (String) session.getAttribute("userName");
+		User loggedInInUser = uDao.get(username);
+		model.addAttribute("active_user", loggedInInUser.getUsername());
+		List<Issue> issues = iDao.getAssignedIssuesByDepartment(loggedInInUser.getDepartment());	
+		model.addAttribute("issues", issues);
 		return "dashboard/depadmin";
 	}
 	
@@ -53,7 +58,7 @@ public class DashBoardDepartAdminController {
 			model.addAttribute("active_user", loggedInInUser.getUsername());
 			List<Issue> issues = iDao.getAssignedIssuesByDepartment(loggedInInUser.getDepartment());	
 			model.addAttribute("issues", issues);
-			model.addAttribute("msg", "please select an issue");
+			model.addAttribute("select_msg", "please select an issue");
 			return "dashboard/depadmin";
 		
 		}else {

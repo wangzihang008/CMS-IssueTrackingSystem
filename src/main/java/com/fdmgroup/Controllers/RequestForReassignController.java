@@ -23,7 +23,7 @@ import com.fdmgroup.Enum.Status;
 
 @Controller
 @SessionAttributes(value = {"active_issue"})
-public class RejectController {
+public class RequestForReassignController {
 
 	@Resource(name = "issueDAOBean")
 	private IssueDAO iDao;
@@ -34,25 +34,25 @@ public class RejectController {
 	@Resource(name = "issueDetailDAOBean")
 	private IssueDetailDAO idDao;
 	
-	@RequestMapping(value= "/issue/reject", method=RequestMethod.GET)
-	public String goToReject() {
+	@RequestMapping(value= "/issue/request", method=RequestMethod.GET)
+	public String goToRequest() {
 		// TODO Auto-generated method stub
-		return "/issue/reject";
+		return "/issue/request";
 	}
 	
-	@RequestMapping(value= "/issue/reject", method=RequestMethod.POST)
-	public String doReject(Model model, @ModelAttribute(value = "active_issue") Issue issue, int selection, HttpSession session) {
+	@RequestMapping(value= "/issue/request", method=RequestMethod.POST)
+	public String doRequest(Model model, @ModelAttribute(value = "active_issue") Issue issue, int selection, HttpSession session) {
 		// TODO Auto-generated method stub	
 		String name = (String) session.getAttribute("userName");
 		User user = uDao.get(name);
 		if(selection == 1) {
 			
-			iDao.changeStatus(issue, Status.REJECTED);
-			idDao.addIssueDetail(new IssueDetail(user.getUsername() + " rejected this issue", Calendar.getInstance(), user, issue));
+			iDao.changeStatus(issue, Status.REQUESTED);
+			idDao.addIssueDetail(new IssueDetail(user.getUsername() + " requested a reassignment for this issue", Calendar.getInstance(), user, issue));
 			model.addAttribute("active_user", user.getUsername());
 			List<Issue> issues = iDao.getAssignedIssuesByDepartment(user.getDepartment());
 			model.addAttribute("issues", issues);
-			model.addAttribute("msg", issue + " is successfully rejected");
+			model.addAttribute("msg", "Reassignment is requested for " + issue);
 			return "/dashboard/depadmin";			
 		
 		}else if(selection == 0) {
@@ -64,7 +64,7 @@ public class RejectController {
 			
 		}else {
 			
-			return "/issue/reject";
+			return "/issue/request";
 		}
 		
 	}

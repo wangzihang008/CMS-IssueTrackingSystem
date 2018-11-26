@@ -6,11 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Reject</title>
+<title>Request for Reassignment</title>
 </head>
 <body>
-	<h1>Are you sure to reject this issue?</h1>
-	<sf:form action = "/IssueTrackingSystem/issue/reject" method = "POST">
+	<h1>Are you sure to request a reassignment for this issue?</h1>
+	<sf:form action = "/IssueTrackingSystem/issue/request" method = "POST">
 		<select name="selection">
 			<option value=-1>---select---</option>
 			<option value=1>yes</option>

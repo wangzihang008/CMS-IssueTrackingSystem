@@ -28,10 +28,8 @@ public class JpaRunner {
 		UserDAO uDao = new UserDAO(emf);
 		IssueDetailDAO idDao = new IssueDetailDAO(emf);
 		DepartmentDAO dDao = new DepartmentDAO(emf);
-		//User u1 = new User("qz", "qzz", Type.DEPADMIN, null, null, "q", "z");
-		//uDao.addUser(u1);
-		IssueDetail id1 = new IssueDetail("aaaa", Calendar.getInstance(), null, null);
-		idDao.addIssueDetail(id1);
+		Issue i1 = iDao.getIssue(2);
+		iDao.changeStatus(i1, Status.ASSIGNED);
 	}
 
 }
