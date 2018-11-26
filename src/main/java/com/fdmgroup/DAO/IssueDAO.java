@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import javax.persistence.Query;
 
 import com.fdmgroup.Entities.Department;
@@ -24,18 +25,16 @@ public class IssueDAO {
 	public EntityManagerFactory getEmf() {
 		return emf;
 	}
-	
+
 	public IssueDAO(EntityManagerFactory emf) {
 
-		
 		this.emf = emf;
 	}
-	
 
 	public IssueDAO() {
 
 	}
-	
+
 	public void addIssue(Issue issue) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -51,12 +50,41 @@ public class IssueDAO {
 		em.close();
 		return returnedIssue;
 	}
-	
-	public List<Issue> getAssignedIssuesByDepartment(Department department){
-		
+
+	/**
+	 * 
+	 * @return All Issues In DataBase
+	 */
+	public ArrayList<Issue> getAllIssue() {
+		// TODO Auto-generated method stub
 		EntityManager em = emf.createEntityManager();
-		Query query = em.createQuery(
-				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1", Issue.class);
+		String str = "select i from Issue i";
+		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
+		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		return result;
+	}
+
+	/**
+	 * 
+	 * @param adminId
+	 * @return a list of issue, given admin id
+	 */
+	public ArrayList<Issue> getIssuesByAdminId(long adminId) {
+		EntityManager em = emf.createEntityManager();
+
+		String str = "select i from Issue i WHERE i.admin=:admin";
+		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
+		query.setParameter("admin", adminId);
+		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
+		return result;
+	}
+
+	public List<Issue> getAssignedIssuesByDepartment(Department department) {
+
+		EntityManager em = emf.createEntityManager();
+		Query query = em.createQuery("SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "'",
+				Issue.class);
 		List<Issue> issues = query.getResultList();
 		return issues;
 	}
