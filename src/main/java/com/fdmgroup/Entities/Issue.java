@@ -41,11 +41,11 @@ public class Issue {
 
 	private Calendar lastUpdatedDate;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User admin;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User createUser;
 
