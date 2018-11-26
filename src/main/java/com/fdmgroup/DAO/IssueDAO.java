@@ -52,12 +52,13 @@ public class IssueDAO {
 		return returnedIssue;
 	}
 	
-	public List<Issue> getIssuesByDepartment(Department department){
+	public List<Issue> getAssignedIssuesByDepartment(Department department){
 		
 		EntityManager em = emf.createEntityManager();
 		Query query = em.createQuery(
-				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "'", Issue.class);
+				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1", Issue.class);
 		List<Issue> issues = query.getResultList();
 		return issues;
 	}
+
 }

@@ -78,7 +78,7 @@ public class Issue {
 	@Override
 	public String toString() {
 
-		return "Issue id: "+ id + ", " + title;
+		return "Issue id: "+ id + ", " + title + ", " + status;
 
 	}
 

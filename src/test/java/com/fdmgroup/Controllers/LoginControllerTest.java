@@ -156,7 +156,7 @@ public class LoginControllerTest {
 		when(mockUser2.getPassword()).thenReturn("ExamplePassword");
 		when(mockUser2.getType()).thenReturn(Type.DEPADMIN);
 		when(mockUser2.getDepartment()).thenReturn(null);
-		when(iDao.getIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
+		when(iDao.getAssignedIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
 		String nextPage = lc.Login(mockModel, mockUser, mockSession);
 
 		

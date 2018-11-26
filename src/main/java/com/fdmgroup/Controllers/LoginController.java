@@ -70,7 +70,7 @@ public class LoginController {
 			} else {
 		
 				model.addAttribute("active_user", user2.getUsername());
-				List<Issue> issues = iDao.getIssuesByDepartment(user2.getDepartment());
+				List<Issue> issues = iDao.getAssignedIssuesByDepartment(user2.getDepartment());
 				model.addAttribute("issues", issues);
 				return "dashboard/depadmin";
 			}

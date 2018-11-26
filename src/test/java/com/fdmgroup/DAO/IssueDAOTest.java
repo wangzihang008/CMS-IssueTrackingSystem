@@ -83,7 +83,7 @@ public class IssueDAOTest {
 		when(mockQuery.getResultList()).thenReturn(null);
 		
 		//act
-		List<Issue> issuesByDepartment = IssueDAO.getIssuesByDepartment(mockDepartment);
+		List<Issue> issuesByDepartment = IssueDAO.getAssignedIssuesByDepartment(mockDepartment);
 		
 		//assert
 		assertEquals(issuesByDepartment, null);

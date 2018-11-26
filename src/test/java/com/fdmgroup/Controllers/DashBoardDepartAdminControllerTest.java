@@ -60,7 +60,7 @@ public class DashBoardDepartAdminControllerTest {
 		when(mockUserDao.get("qz")).thenReturn(mockUser);
 		when(mockUser.getUsername()).thenReturn("qz");
 		when(mockUser.getDepartment()).thenReturn(mockDepartment);
-		when(mockIssueDao.getIssuesByDepartment(mockDepartment)).thenReturn(null);
+		when(mockIssueDao.getAssignedIssuesByDepartment(mockDepartment)).thenReturn(null);
 		
 		//act
 		String nextPage = ddc.checkIssues(mockModel, mockIssue, mockSession);
