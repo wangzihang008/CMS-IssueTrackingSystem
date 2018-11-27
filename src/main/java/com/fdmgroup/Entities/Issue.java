@@ -42,11 +42,11 @@ public class Issue {
 	private Calendar lastUpdatedDate;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ADMIN_ID")
 	private User admin;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "USER_ID")
 	private User createUser;
 
 	@ManyToOne
