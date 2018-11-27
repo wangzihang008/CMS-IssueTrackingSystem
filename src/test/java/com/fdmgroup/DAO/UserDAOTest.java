@@ -20,6 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.User;
 
 public class UserDAOTest {
@@ -74,16 +75,16 @@ public class UserDAOTest {
 		TypedQuery<User> query = mock(TypedQuery.class);
 		ArrayList<User> mockResult = new ArrayList<User>();
 		String str = "select u from User u where u.department=:department";
-		long depId = 123;
+		Department department = new Department();
 		
 		when(mockEm.createQuery(str)).thenReturn(query);
 		when(query.getResultList()).thenReturn(mockResult);
 		
-		ArrayList<User> result = userDAO.getUserByDep(depId);
+		ArrayList<User> result = userDAO.getUserByDep(department);
 		
 		InOrder order = inOrder(mockEm, query);
 		order.verify(mockEm).createQuery(str);
-		order.verify(query).setParameter("department", depId);
+		order.verify(query).setParameter("department", department);
 		order.verify(query).getResultList();
 		order.verify(mockEm).close();
 		assertEquals(result, mockResult);

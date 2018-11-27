@@ -64,7 +64,7 @@ public class LoginController {
 			if (user2.getType().equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
 
-			} else if (user2.getType().equals(Type.ADMIN)) {
+			} else if (user2.getType() == Type.ADMIN) {
 				return "dashboard/admin";
 
 			} else {

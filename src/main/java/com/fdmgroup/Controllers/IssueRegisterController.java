@@ -23,11 +23,13 @@ public class IssueRegisterController {
 	
 	@Resource(name="customerIssueRegisterBean")
 	private IssueRegisterService irs;
+	@Resource(name="issueBean")
+	private Issue issue;
 
 	@RequestMapping(method=RequestMethod.GET)
 	public String goToIssueRegister(Model model, HttpServletRequest req) {
 		// TODO Auto-generated method stub
-		model.addAttribute("registerIssue", new Issue());
+		model.addAttribute("registerIssue", issue);
 //		map.addAttribute("newIssueDetail", new IssueDetail());
 		irs.getAllDepartments(req);
 		return "issue/register";
