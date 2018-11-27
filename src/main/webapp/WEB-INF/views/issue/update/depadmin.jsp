@@ -20,6 +20,7 @@
 	
 	<a href="http://localhost:8088/IssueTrackingSystem/issue/reject">reject this issue</a>
 	<a href="http://localhost:8088/IssueTrackingSystem/issue/request">request a reassignment</a>
+	<a href="http://localhost:8088/IssueTrackingSystem/issue/resolve">mark it resolved</a>
 	<a href="http://localhost:8088/IssueTrackingSystem/issue/addDetailDepartAdmin">add a new detail</a>
 	<br>
 	<a href="http://localhost:8088/IssueTrackingSystem/dashboard/depadmin">back to dashboard</a>

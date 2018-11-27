@@ -41,11 +41,23 @@ public class DashBoardDepartAdminControllerTest {
 	@Test
 	public void when_requrestForDashboardDepAdmin_then_returnDashboardDepAdminJsp() {
 		
+		//arrange
 		Model mockModel = mock(Model.class);
 		HttpSession mockSession = mock(HttpSession.class);
+		User mockUser = mock(User.class);
+		Department mockDepartment = mock(Department.class);
+		when(mockSession.getAttribute("userName")).thenReturn("");
+		when(mockUserDao.get("")).thenReturn(mockUser);
+		when(mockUser.getDepartment()).thenReturn(mockDepartment);
+		when(mockUser.getUsername()).thenReturn("");
+		when(mockIssueDao.getAssignedIssuesByDepartment(mockDepartment)).thenReturn(null);
 		
+		//act
 		String nextPage = ddc.goToDepartAdminDashBoard(mockModel, mockSession);
 		
+		//assert
+		verify(mockModel).addAttribute("active_user", "");
+		verify(mockModel).addAttribute("issues", null);
 		assertEquals(nextPage, "dashboard/depadmin");
 	}
 	
@@ -72,7 +84,7 @@ public class DashBoardDepartAdminControllerTest {
 		assertEquals(nextPage, "dashboard/depadmin");
 		verify(mockModel).addAttribute("active_user", "qz");
 		verify(mockModel).addAttribute("issues", null);
-		verify(mockModel).addAttribute("msg", "please select an issue");
+		verify(mockModel).addAttribute("select_msg", "please select an issue");
 	}
 
 	@Test

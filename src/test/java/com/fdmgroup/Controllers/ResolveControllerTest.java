@@ -23,7 +23,7 @@ import com.fdmgroup.Entities.IssueDetail;
 import com.fdmgroup.Entities.User;
 import com.fdmgroup.Enum.Status;
 
-public class RejectControllerTest {
+public class ResolveControllerTest {
 
 	@Mock
 	private IssueDAO mockIssueDao;
@@ -38,7 +38,7 @@ public class RejectControllerTest {
 	private Calendar calendar;
 	
 	@InjectMocks
-	private RejectController rc = new RejectController();
+	private ResolveController rc = new ResolveController();
 
 	@Before
 	public void startInjectMocks() {
@@ -48,13 +48,13 @@ public class RejectControllerTest {
 	@Test
 	public void when_requrestForReject_then_returnRejectJsp() {
 		
-		String nextPage = rc.goToReject();
+		String nextPage = rc.goToResolve();
 		
-		assertEquals(nextPage, "/issue/reject");
+		assertEquals(nextPage, "/issue/resolve");
 	}
 	
 	@Test
-	public void when_selectNothing_then_returnRejectJspAndDisplayMsg() {
+	public void when_selectNothing_then_returnResolveJspAndDisplayMsg() {
 		
 		//arrange
 		Model mockModel = mock(Model.class);
@@ -66,11 +66,11 @@ public class RejectControllerTest {
 		int mockSelection = -1;
 		
 		//act
-		String nextPage = rc.doReject(mockModel, mockIssue, mockSelection, mockSession);
+		String nextPage = rc.markResolve(mockModel, mockIssue, mockSelection, mockSession);
 		
 		//assert
 		verify(mockModel).addAttribute("msg", "please select yes or no");
-		assertEquals("/issue/reject", nextPage);
+		assertEquals("/issue/resolve", nextPage);
 	}
 	
 	@Test
@@ -91,14 +91,14 @@ public class RejectControllerTest {
 		int mockSelection = 1;
 		
 		//act
-		String nextPage = rc.doReject(mockModel, mockIssue, mockSelection, mockSession);
+		String nextPage = rc.markResolve(mockModel, mockIssue, mockSelection, mockSession);
 		
 		//assert
-		verify(mockIssueDao).changeStatus(mockIssue, Status.REJECTED);
-		verify(mockIssueDetailDao).addIssueDetail(new IssueDetail(" rejected this issue", calendar, mockUser, mockIssue));
+		verify(mockIssueDao).changeStatus(mockIssue, Status.RESOLVED);
+		verify(mockIssueDetailDao).addIssueDetail(new IssueDetail(" marked this issue resolved", calendar, mockUser, mockIssue));
 		verify(mockModel).addAttribute("active_user", "");
 		verify(mockModel).addAttribute("issues", null);
-		verify(mockModel).addAttribute("msg", " is successfully rejected");
+		verify(mockModel).addAttribute("msg", "You have successfully marked  resolved");
 		assertEquals("/dashboard/depadmin", nextPage);
 	}
 	
@@ -119,7 +119,7 @@ public class RejectControllerTest {
 		int mockSelection = 0;
 		
 		//act
-		String nextPage = rc.doReject(mockModel, mockIssue, mockSelection, mockSession);
+		String nextPage = rc.markResolve(mockModel, mockIssue, mockSelection, mockSession);
 		
 		//assert
 		verify(mockModel).addAttribute("active_user", "");
