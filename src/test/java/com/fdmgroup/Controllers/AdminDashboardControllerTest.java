@@ -1,6 +1,5 @@
 package com.fdmgroup.Controllers;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 
 import com.fdmgroup.Services.AdminDashboardService;
@@ -22,19 +21,19 @@ public class AdminDashboardControllerTest {
 	private AdminDashboardService ads;
 	@InjectMocks
 	private AdminDashboardController adc = new AdminDashboardController();
-	
+
 	@Before
 	public void startInjectionMock() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@Test
 	public void Given_AdminDashboardController_When_goToAdminDashboard_Then_returnAdminDashboardJspPage() {
 		Model model = mock(Model.class);
 		HttpSession session = mock(HttpSession.class);
 		String nextPage = adc.goToAdminDashboard(session, model);
-		
-		verify(ads).getAllIssues();		
+
+		verify(ads).getAllIssues();
 		assertEquals("dashboard/admin", nextPage);
 	}
 }

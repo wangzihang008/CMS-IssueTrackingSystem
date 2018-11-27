@@ -27,15 +27,15 @@
 	</bean>
 
 	<bean id="userDAOBean" class="com.fdmgroup.DAO.UserDAO" />
-	<bean id="issueDAOBean" class="com.fdmgroup.DAO.IssueDAO" />
-	<bean id="issueDetailDAOBean" class="com.fdmgroup.DAO.IssueDetailDAO" />
+
 	<bean id="departmentDAOBean" class="com.fdmgroup.DAO.DepartmentDAO" />
 
 	<bean id="issueDAOBean" class="com.fdmgroup.DAO.IssueDAO" />
-	
+
 	<bean id="issueDetailDAOBean" class="com.fdmgroup.DAO.IssueDetailDAO" />
-	
+
 	<bean id="adminDashboardServiceBean" class="com.fdmgroup.Services.AdminDashboardService" />
-	
+
 	<bean id="customerIssueRegisterBean" class="com.fdmgroup.Services.IssueRegisterService" />
+
 </beans>

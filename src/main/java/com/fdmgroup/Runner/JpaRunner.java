@@ -1,4 +1,4 @@
-package runner;
+package com.fdmgroup.Runner;
 
 import java.util.Calendar;
 import java.util.List;
