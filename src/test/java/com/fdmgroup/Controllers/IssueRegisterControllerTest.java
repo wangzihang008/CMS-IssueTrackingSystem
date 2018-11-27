@@ -24,6 +24,8 @@ public class IssueRegisterControllerTest {
 
 	@Mock
 	private IssueRegisterService irs;
+	@Mock
+	private Issue issue;
 	@InjectMocks
 	private IssueRegisterController irc = new IssueRegisterController();
 	
@@ -60,5 +62,79 @@ public class IssueRegisterControllerTest {
 		
 		verify(irs).register(title, content, department, priority, req, session);
 		assertEquals("dashboard/customer", nextPage);
+	}
+
+	public void When_IssueRegisterController_Given_goToIssueRegisterWithIssueConditions_Then_returnIssueRegisterJspPage() {
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		String str = "XXX";
+		String strNum = "1";
+		
+		when(irs.register(str, str, strNum, strNum, req, session)).thenReturn("dashboard/customer");
+		
+		String nextPage = irc.goToIssueRegister(str, str, strNum, strNum, req, session);
+		
+		verify(irs).register(str, str, strNum, strNum, req, session);
+		assertEquals("dashboard/customer", nextPage);
+	}
+	
+	@Test
+	public void When_IssueRegisterController_Given_goToIssueRegisterWithEmptyContent_Then_returnIssueRegisterJspPage() {
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		String str = "XXX";
+		String strNum = "1";
+		
+		when(irs.register(str, "", strNum, strNum, req, session)).thenReturn("issue/register");
+		
+		String nextPage = irc.goToIssueRegister(str, "", strNum, strNum, req, session);
+		
+		verify(irs).register(str, "", strNum, strNum, req, session);
+		assertEquals("issue/register", nextPage);
+	}
+	
+	@Test
+	public void When_IssueRegisterController_Given_goToIssueRegisterWithEmptyTitle_Then_returnIssueRegisterJspPage() {
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		String str = "XXX";
+		String strNum = "1";
+		
+		when(irs.register("", str, strNum, strNum, req, session)).thenReturn("issue/register");
+		
+		String nextPage = irc.goToIssueRegister("", str, strNum, strNum, req, session);
+		
+		verify(irs).register("", str, strNum, strNum, req, session);
+		assertEquals("issue/register", nextPage);
+	}
+	
+	@Test
+	public void When_IssueRegisterController_Given_goToIssueRegisterWithEmptyDepartment_Then_returnIssueRegisterJspPage() {
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		String str = "XXX";
+		String strNum = "1";
+		
+		when(irs.register(str, str, "", strNum, req, session)).thenReturn("issue/register");
+		
+		String nextPage = irc.goToIssueRegister(str, str, "", strNum, req, session);
+		
+		verify(irs).register(str, str, "", strNum, req, session);
+		assertEquals("issue/register", nextPage);
+	}
+	
+	@Test
+	public void When_IssueRegisterController_Given_goToIssueRegisterWithEmptyPriority_Then_returnIssueRegisterJspPage() {
+		HttpSession session = mock(HttpSession.class);
+		HttpServletRequest req = mock(HttpServletRequest.class);
+		String str = "XXX";
+		String strNum = "1";
+		
+		when(irs.register(str, str, strNum, "", req, session)).thenReturn("issue/register");
+		
+		String nextPage = irc.goToIssueRegister(str, str, strNum, "", req, session);
+		
+		verify(irs).register(str, str, strNum, "", req, session);
+		assertEquals("issue/register", nextPage);
 	}
 }
