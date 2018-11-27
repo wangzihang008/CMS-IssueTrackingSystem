@@ -47,8 +47,8 @@ public class IssueDetail {
 
 	@Override
 	public String toString() {
-		return "IssueDetail [id=" + id + ", content=" + content + ", createDate=" + createDate + ", user=" + user
-				+ ", issue=" + issue + "]";
+
+		return content + ", created by " + user.getUsername() + ", on " + createDate.getTime();
 	}
 
 	public long getId() {

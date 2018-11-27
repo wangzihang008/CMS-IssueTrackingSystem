@@ -1,6 +1,8 @@
 package com.fdmgroup.Controllers;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +22,9 @@ public class IssueDetailController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String goToDashboard() {
-		return "dashboard/?";
+	public String goToDashboard(HttpSession session) {
+		String url = (String) session.getAttribute("userType");
+		return "dashboard/" + url;
 	}
 
 }

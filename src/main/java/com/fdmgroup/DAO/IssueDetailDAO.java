@@ -6,9 +6,8 @@ import javax.annotation.Resource;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
-
-import com.fdmgroup.Entities.IssueDetail;
+import javax.persistence.Query;
+import com.fdmgroup.Entities.Issue;
 import com.fdmgroup.Entities.IssueDetail;
 
 public class IssueDetailDAO {
@@ -16,16 +15,16 @@ public class IssueDetailDAO {
 	@Resource(name = "emfBean")
 	private EntityManagerFactory emf;
 
-	public EntityManagerFactory getEmf() {
-		return emf;
-	}
-
 	public IssueDetailDAO(EntityManagerFactory emf) {
 		this.emf = emf;
 	}
 
 	public IssueDetailDAO() {
 
+	}
+
+	public EntityManagerFactory getEmf() {
+		return emf;
 	}
 
 	public void addIssueDetail(IssueDetail issueDetail) {
@@ -44,13 +43,13 @@ public class IssueDetailDAO {
 		return returnedIssueDetail;
 	}
 
-	public ArrayList<IssueDetail> getIssueDetailsByIssueId(long issueId) {
+	public ArrayList<IssueDetail> getIssueDetailsByIssue(Issue issue) {
+
 		EntityManager em = emf.createEntityManager();
-		String str = "select id from IssueDetail id WHERE id.issue=:issue";
-		TypedQuery<IssueDetail> query = (TypedQuery<IssueDetail>) em.createQuery(str);
-		query.setParameter("issue", issueId);
-		ArrayList<IssueDetail> result = (ArrayList<IssueDetail>) query.getResultList();
-		em.close();
-		return result;
+		Query query = em.createQuery("SELECT d FROM IssueDetail d WHERE issue_id = '" + issue.getId() + "'",
+				IssueDetail.class);
+		ArrayList<IssueDetail> issueDetails = (ArrayList<IssueDetail>) query.getResultList();
+		return issueDetails;
+
 	}
 }

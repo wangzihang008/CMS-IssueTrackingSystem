@@ -28,47 +28,64 @@ public class IssueRegisterService {
 	@Resource(name="departmentDAOBean")
 	private DepartmentDAO departmentDao;
 	
-	public void register(IssueDetail issueDetail, HttpServletRequest req, HttpSession session) {
-		if("".equals(issueDetail.getContent())) {
+	public String register(String title, String content, String departmentId, String priority, 
+			HttpServletRequest req, HttpSession session) {
+		String result = "issue/register";
+		if("".equals(content)) {
 			req.setAttribute("errorMessage", "Content of issue is missing!");
-		}else if("".equals(req.getAttribute("title"))){
+		}else if("".equals(title)){
 			req.setAttribute("errorMessage", "Title of issue is missing!");
-		}else if("".equals(req.getAttribute("department"))) {
+		}else if("".equals(departmentId)) {
 			req.setAttribute("errorMessage", "Department of issue is missing!");
-		}else if("".equals(req.getAttribute("priority"))){
+		}else if("".equals(priority)){
 			req.setAttribute("errorMessage", "priority of issue is missing!");
 		}else {
 			Issue issue = new Issue();
+			issue.setTitle(title);
+			issue.setPriority(Integer.parseInt(priority));
+			IssueDetail issueDetail = new IssueDetail();
+			issueDetail.setContent(content);
 			Calendar calendar = Calendar.getInstance();
-			Department department = departmentDao.getDepartment((String)req.getAttribute("department"));
-			ArrayList<User> depAdmins = userDao.getUserByDep(department.getId());
+//			System.out.println("**************" + req.getAttribute("department") + "*************");
+			Department department = departmentDao.getDepartment(Long.parseLong(departmentId));
+			ArrayList<User> depAdmins = new ArrayList<User>();
+			depAdmins.addAll(department.getAdmins());
 			User user = userDao.getUser((long)session.getAttribute("userId"));
 			issue.setCreateDate(calendar);
 			issue.setCreateUser(user);
 			issue.setDepartment(department);
 			issue.setLastUpdatedDate(calendar);
 			issue.setStatus(Status.ASSIGNED);
-			issue.setTitle((String)req.getAttribute("title"));
-			issue.setPriority((int)req.getAttribute("priority"));
+			issue.setTitle(title);
+			issue.setPriority(Integer.parseInt(priority));
 			
 			issueDetail.setCreateDate(calendar);
 			issueDetail.setUser(user);
 			issue.addDetail(issueDetail);
 			
-			User takenAdmin = depAdmins.get(0);
-			int cases = issueDao.getIssuesByAdminId(takenAdmin.getId()).size();
-			for(User admin : depAdmins) {
-				if(issueDao.getIssuesByAdminId(admin.getId()).size() < cases) {
-					takenAdmin = admin;
-					cases = issueDao.getIssuesByAdminId(admin.getId()).size();
+			if(!depAdmins.isEmpty()) {
+				User takenAdmin = depAdmins.get(0);
+				int cases = issueDao.getIssuesByAdminId(takenAdmin.getId()).size();
+				for(User admin : depAdmins) {
+					if(issueDao.getIssuesByAdminId(admin.getId()).size() < cases) {
+						takenAdmin = admin;
+						cases = issueDao.getIssuesByAdminId(admin.getId()).size();
+					}
 				}
+				issue.setAdmin(takenAdmin);
 			}
 			
-			issue.setAdmin(takenAdmin);
 			issueDao.addIssue(issue);
+			req.setAttribute("message", "Issue created successful");
+			result = "dashboard";
 		}
+		return result;
 	}
 	
+	/**
+	 * 
+	 * @param req
+	 */
 	public void getAllDepartments(HttpServletRequest req) {
 		req.setAttribute("allDepartment", departmentDao.getAllDepartment());
 	}

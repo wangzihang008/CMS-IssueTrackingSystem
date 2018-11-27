@@ -41,15 +41,15 @@ public class Issue {
 
 	private Calendar lastUpdatedDate;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User admin;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
 	private User createUser;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
@@ -57,8 +57,8 @@ public class Issue {
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(String title, Status status, Calendar createDate, int priority, User admin,
-			User createUser, Department department) {
+	public Issue(String title, Status status, Calendar createDate, int priority, User admin, User createUser,
+			Department department) {
 		super();
 		this.title = title;
 		this.status = status;
@@ -75,9 +75,7 @@ public class Issue {
 
 	@Override
 	public String toString() {
-		return "Issue [id=" + id + ", title=" + title + ", status=" + status + ", createDate=" + createDate
-				+ ", priority=" + priority + ", lastUpdatedDate=" + lastUpdatedDate + ", admin=" + admin
-				+ ", createUser=" + createUser + ", department=" + department + ", details=" + details + "]";
+		return "Issue id: " + id + ", " + title;
 	}
 
 	public long getId() {
@@ -169,4 +167,5 @@ public class Issue {
 		details.remove(detail);
 		detail.setIssue(null);
 	}
+
 }

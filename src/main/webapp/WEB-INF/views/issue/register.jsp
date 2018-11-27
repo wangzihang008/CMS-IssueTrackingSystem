@@ -13,39 +13,51 @@
 	<c:if test="${errorMessage != null}">
 		<h4>${errorMessage}</h4>
 	</c:if>
+	<c:if test="${message != null}">
+		<h4>${message}</h4>
+	</c:if>
 	<h2>Register</h2>
-	<sf:form action="issue/register" method="POST"
-		modelAttribute="newIssueDetail">
-		<div>
-			<p>TITLE:</p>
-			<input type="text" placeholder="Input Issue Title"
-				name="title" />
-		</div>
-		<div>
-			<p>DESCRIPTION:</p>
-			<sf:input type="text" placeholder="Input Issue Detail" path="content" />
-		</div>
-		<div>
-			<p>DEPARTMENT:</p>
-			<select name="priority">
-				<c:forEach items="${allDepartment}" var="item">
-			         <option value="${item.id}"><c:out value="${item}" /></option>
-				</c:forEach>
-			</select>
-			<input type="text" placeholder="Input Issue Department"
-				name="department" />
-		</div>
-		<div>
-			<p>PRIORITY:</p>
-			<select name="priority">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-			</select>
-		</div>
-		<input type="submit" value="SUBMIT">
-	</sf:form>
+	<%-- 	<sf:form action="register" method="POST" modelAttribute="registerIssue"> --%>
+	<%-- 		<sf:label path="title">TITLE:</sf:label> --%>
+	<%-- 		<sf:input type="text" placeholder="Input Issue Title" path="title" /> --%>
+	<!-- 		<p>DESCRIPTION:</p> -->
+	<!-- 		<input type="text" placeholder="Input Issue Detail" name="content" /> -->
+
+	<%-- 		<sf:label path="department">DEPARTMENT:</sf:label> --%>
+	<%-- 		<sf:select path="department"> --%>
+	<%-- 			<c:forEach items="${allDepartment}" var="item"> --%>
+	<%-- 				<option value="${item.id}"><c:out value="${item.name}" /></option> --%>
+	<%-- 			</c:forEach> --%>
+	<%-- 		</sf:select> --%>
+
+	<%-- 		<sf:label path="priority">PRIORITY:</sf:label> --%>
+	<%-- 		<sf:select name="priority" path="priority"> --%>
+	<!-- 			<option value="1">1</option> -->
+	<!-- 			<option value="2">2</option> -->
+	<!-- 			<option value="3">3</option> -->
+	<!-- 			<option value="4">4</option> -->
+	<!-- 			<option value="5">5</option> -->
+	<%-- 		</sf:select> --%>
+	<!-- 		<input type="submit" value="SUBMIT"> -->
+	<%-- 	</sf:form> --%>
+
+	<form action="/IssueTrackingSystem/issue/register" method="POST">
+		<input type="text" placeholder="Input Issue Title" name="title" /> 
+		<input type="text" placeholder="Input Issue Content" name="content" /> 
+		<select name="department">
+			<c:forEach items="${allDepartment}" var="item">
+				<option value="${item['id']}"><c:out value="${item.name}" /></option>
+			</c:forEach>
+		</select>
+		<!-- 			type="text" placeholder="Input Issue Department" name="department" /> -->
+		<!-- 		<input type="text" placeholder="Input Issue Priority" name="priority" /> -->
+		<select name="priority">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+			<option value="5">5</option>
+		</select> <input type="submit" value="submit" />
+	</form>
 </body>
 </html>

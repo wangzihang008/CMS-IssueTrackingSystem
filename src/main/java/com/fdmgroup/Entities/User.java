@@ -40,7 +40,7 @@ public class User {
 	@Enumerated(EnumType.ORDINAL)
 	private Status status;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
@@ -50,7 +50,7 @@ public class User {
 	@Column(name = "LAST_NAME")
 	private String lastName;
 
-	@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "admin", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Column(name = "USER_ISSUES")
 	private List<Issue> issues = new ArrayList<>();
 
@@ -152,4 +152,10 @@ public class User {
 		issue.setCreateUser(null);
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", type=" + type + ", status="
+				+ status + ", firstName=" + firstName + ", lastName=" + lastName
+				+ "]";
+	}
 }

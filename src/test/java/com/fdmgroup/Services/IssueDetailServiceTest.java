@@ -9,11 +9,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.DAO.IssueDetailDAO;
+import com.fdmgroup.Entities.Issue;
 
 public class IssueDetailServiceTest {
 
 	@Mock
 	private IssueDetailDAO issueDetailDAO;
+	
+	@Mock Issue mockIssue;
 	
 	@InjectMocks
 	private IssueDetailService ids = new IssueDetailService();
@@ -25,7 +28,7 @@ public class IssueDetailServiceTest {
 	
 	@Test
 	public void Given_IssueDetailService_When_displayDetails_Then_returnAllIssues() {
-		ids.displayAllDetails();
-		verify(issueDetailDAO).getIssueDetailsByIssueId(1);
+		ids.displayAllDetails(mockIssue);
+		verify(issueDetailDAO).getIssueDetailsByIssue(mockIssue);
 	}
 }
