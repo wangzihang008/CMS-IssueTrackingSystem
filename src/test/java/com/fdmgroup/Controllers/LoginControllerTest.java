@@ -164,7 +164,7 @@ public class LoginControllerTest {
 		when(mockUser2.getType()).thenReturn(Type.DEPADMIN);
 		when(mockUser2.getDepartment()).thenReturn(null);
 		when(mockUser2.getStatus()).thenReturn(Status.ACTIVE);
-		when(iDao.getIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
+		when(iDao.getAssignedIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
 		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
 
 		
@@ -188,7 +188,7 @@ public class LoginControllerTest {
 		when(mockUser2.getType()).thenReturn(Type.DEPADMIN);
 		when(mockUser2.getDepartment()).thenReturn(null);
 		when(mockUser2.getStatus()).thenReturn(Status.INACTIVE);
-		when(iDao.getIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
+		when(iDao.getAssignedIssuesByDepartment(mockUser2.getDepartment())).thenReturn(null);
 		String nextPage = lc.Login(mockModel, mockUser, mockSession, mockRequest);
 
 		

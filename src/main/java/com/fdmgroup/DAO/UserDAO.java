@@ -12,6 +12,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
+import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.User;
 
 public class UserDAO {
@@ -91,10 +92,10 @@ public class UserDAO {
 	 * @param depId
 	 * @return return all admins who work in the department with department id
 	 */
-	public ArrayList<User> getUserByDep(long depId){
+	public ArrayList<User> getUserByDep(Department department){
 		EntityManager em = emf.createEntityManager();
 		TypedQuery<User> query = (TypedQuery<User>) em.createQuery("select u from User u where u.department=:department");
-		query.setParameter("department", depId);
+		query.setParameter("department", department);
 		ArrayList<User> result = (ArrayList<User>) query.getResultList();
 		em.close();
 		return result;
