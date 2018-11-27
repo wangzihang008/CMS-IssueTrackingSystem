@@ -42,8 +42,9 @@ public class DashBoardDepartAdminControllerTest {
 	public void when_requrestForDashboardDepAdmin_then_returnDashboardDepAdminJsp() {
 		
 		Model mockModel = mock(Model.class);
+		HttpSession mockSession = mock(HttpSession.class);
 		
-		String nextPage = ddc.goToDepartAdminDashBoard(mockModel);
+		String nextPage = ddc.goToDepartAdminDashBoard(mockModel, mockSession);
 		
 		assertEquals(nextPage, "dashboard/depadmin");
 	}

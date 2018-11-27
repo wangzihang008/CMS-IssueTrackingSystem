@@ -18,6 +18,9 @@
 		</select>
 		<input type="submit" value="select">
 	</sf:form>
+	
+	<span style="color: red;">${msg}</span>
+	<br>
 	<a href="http://localhost:8088/IssueTrackingSystem/dashboard/depadmin">back to dashboard</a>
 	
 </body>

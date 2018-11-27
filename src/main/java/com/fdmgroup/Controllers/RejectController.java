@@ -64,6 +64,7 @@ public class RejectController {
 			
 		}else {
 			
+			model.addAttribute("msg", "please select yes or no");
 			return "/issue/reject";
 		}
 		

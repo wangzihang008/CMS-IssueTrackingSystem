@@ -1,5 +1,7 @@
 package com.fdmgroup.Controllers;
 
+import static org.mockito.Mockito.verify;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -64,6 +66,7 @@ public class RequestForReassignController {
 			
 		}else {
 			
+			model.addAttribute("msg", "please select yes or no");
 			return "/issue/request";
 		}
 		
