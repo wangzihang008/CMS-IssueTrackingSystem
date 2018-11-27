@@ -33,4 +33,12 @@
 	<bean id="adminDashboardServiceBean" class="com.fdmgroup.Services.AdminDashboardService" />
 	
 	<bean id="customerIssueRegisterBean" class="com.fdmgroup.Services.IssueRegisterService" />
+	
+	<bean id="IssueUpdateCustomerServiceBean" class="com.fdmgroup.Services.IssueUpdateCustomerService" />
+	
+	<bean id="issueBean" class="com.fdmgroup.Entities.Issue"/>
+	
+	<bean id="issueDetailBean" class="com.fdmgroup.Entities.IssueDetail"/>
+	
+	<bean id="calendarBean" class="java.util.Calendar" factory-method="getInstance" />
 </beans>

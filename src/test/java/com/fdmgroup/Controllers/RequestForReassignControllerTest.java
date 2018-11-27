@@ -34,6 +34,9 @@ public class RequestForReassignControllerTest {
 	@Mock
 	private IssueDetailDAO mockIssueDetailDao;
 	
+	@Mock
+	private Calendar calendar;
+	
 	@InjectMocks
 	private RequestForReassignController rc = new RequestForReassignController();
 
@@ -92,7 +95,7 @@ public class RequestForReassignControllerTest {
 		
 		//assert
 		verify(mockIssueDao).changeStatus(mockIssue, Status.REQUESTED);
-		verify(mockIssueDetailDao).addIssueDetail(new IssueDetail(mockUser.getUsername() + " requested a reassignment for this issue", Calendar.getInstance(), mockUser, mockIssue));
+		verify(mockIssueDetailDao).addIssueDetail(new IssueDetail(mockUser.getUsername() + " requested a reassignment for this issue", calendar, mockUser, mockIssue));
 		verify(mockModel).addAttribute("active_user", "");
 		verify(mockModel).addAttribute("issues", null);
 		verify(mockModel).addAttribute("msg", "Reassignment is requested for ");

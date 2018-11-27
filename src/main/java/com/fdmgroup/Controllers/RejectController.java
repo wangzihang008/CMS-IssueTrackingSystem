@@ -34,6 +34,9 @@ public class RejectController {
 	@Resource(name = "issueDetailDAOBean")
 	private IssueDetailDAO idDao;
 	
+	@Resource(name = "calendarBean")
+	private Calendar calendar;
+	
 	@RequestMapping(value= "/issue/reject", method=RequestMethod.GET)
 	public String goToReject() {
 		// TODO Auto-generated method stub
@@ -48,7 +51,7 @@ public class RejectController {
 		if(selection == 1) {
 			
 			iDao.changeStatus(issue, Status.REJECTED);
-			idDao.addIssueDetail(new IssueDetail(user.getUsername() + " rejected this issue", Calendar.getInstance(), user, issue));
+			idDao.addIssueDetail(new IssueDetail(user.getUsername() + " rejected this issue", calendar, user, issue));
 			model.addAttribute("active_user", user.getUsername());
 			List<Issue> issues = iDao.getAssignedIssuesByDepartment(user.getDepartment());
 			model.addAttribute("issues", issues);

@@ -24,6 +24,7 @@ import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.Issue;
+import com.fdmgroup.Entities.User;
 
 public class IssueDAOTest {
 	
@@ -77,17 +78,17 @@ public class IssueDAOTest {
 		String str = "select i from Issue i WHERE i.admin=:admin";
 		TypedQuery<Issue> query = mock(TypedQuery.class);
 		ArrayList<Issue> mockResult = new ArrayList<Issue>();
-		long adminId = 123;
+		User admin = new User();
 		
 		when(mockEm.createQuery(str)).thenReturn(query);
 		when(query.getResultList()).thenReturn(mockResult);
 		
-		ArrayList<Issue> result = IssueDAO.getIssuesByAdminId(adminId);
+		ArrayList<Issue> result = IssueDAO.getIssuesByAdminId(admin);
 		
 		InOrder order = inOrder(mockEmf, mockEm, query);
 		order.verify(mockEmf).createEntityManager();
 		order.verify(mockEm).createQuery(str);
-		order.verify(query).setParameter("admin", adminId);
+		order.verify(query).setParameter("admin", admin);
 		order.verify(query).getResultList();
 		order.verify(mockEm).close();
 		assertEquals(mockResult, result);

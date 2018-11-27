@@ -33,6 +33,9 @@ public class AddNewDetailDepartAdminControllerTest {
 	@Mock
 	private IssueDetailDAO mockIssueDetailDao;
 	
+	@Mock
+	private Calendar calendar;
+	
 	@InjectMocks
 	private AddNewDetailDepartAdminController ac = new AddNewDetailDepartAdminController();
 
@@ -79,7 +82,7 @@ public class AddNewDetailDepartAdminControllerTest {
 		verify(mockModel).addAttribute("blank_detail", mockIssueDetail);
 		verify(mockIssueDetail).setUser(mockUser);
 		verify(mockIssueDetail).setIssue(mockIssue);
-		verify(mockIssueDetail).setCreateDate(Calendar.getInstance());
+		verify(mockIssueDetail).setCreateDate(calendar);
 		verify(mockIssueDetailDao).addIssueDetail(mockIssueDetail);
 		verify(mockModel).addAttribute("active_user", "");
 		verify(mockModel).addAttribute("issues", null);

@@ -36,6 +36,9 @@ public class RequestForReassignController {
 	@Resource(name = "issueDetailDAOBean")
 	private IssueDetailDAO idDao;
 	
+	@Resource(name = "calendarBean")
+	private Calendar calendar;
+	
 	@RequestMapping(value= "/issue/request", method=RequestMethod.GET)
 	public String goToRequest() {
 		// TODO Auto-generated method stub
@@ -50,7 +53,7 @@ public class RequestForReassignController {
 		if(selection == 1) {
 			
 			iDao.changeStatus(issue, Status.REQUESTED);
-			idDao.addIssueDetail(new IssueDetail(user.getUsername() + " requested a reassignment for this issue", Calendar.getInstance(), user, issue));
+			idDao.addIssueDetail(new IssueDetail(user.getUsername() + " requested a reassignment for this issue", calendar, user, issue));
 			model.addAttribute("active_user", user.getUsername());
 			List<Issue> issues = iDao.getAssignedIssuesByDepartment(user.getDepartment());
 			model.addAttribute("issues", issues);

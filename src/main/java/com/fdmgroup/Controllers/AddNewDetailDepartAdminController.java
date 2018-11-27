@@ -33,6 +33,9 @@ public class AddNewDetailDepartAdminController {
 	@Resource(name = "issueDetailDAOBean")
 	private IssueDetailDAO idDao;
 	
+	@Resource(name = "calendarBean")
+	private Calendar calendar;
+	
 	@RequestMapping(value= "/issue/addDetailDepartAdmin", method=RequestMethod.GET)
 	public String goToAddDetail(Model model) {
 		// TODO Auto-generated method stub
@@ -48,7 +51,7 @@ public class AddNewDetailDepartAdminController {
 		User user = uDao.get(name);
 		detail.setUser(user);
 		detail.setIssue(issue);
-		detail.setCreateDate(Calendar.getInstance());
+		detail.setCreateDate(calendar);
 		idDao.addIssueDetail(detail);
 		model.addAttribute("active_user", user.getUsername());
 		List<Issue> issues = iDao.getAssignedIssuesByDepartment(user.getDepartment());

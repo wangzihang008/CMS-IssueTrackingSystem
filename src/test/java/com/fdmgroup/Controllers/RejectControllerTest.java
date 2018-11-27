@@ -34,6 +34,9 @@ public class RejectControllerTest {
 	@Mock
 	private IssueDetailDAO mockIssueDetailDao;
 	
+	@Mock
+	private Calendar calendar;
+	
 	@InjectMocks
 	private RejectController rc = new RejectController();
 
@@ -92,7 +95,7 @@ public class RejectControllerTest {
 		
 		//assert
 		verify(mockIssueDao).changeStatus(mockIssue, Status.REJECTED);
-		verify(mockIssueDetailDao).addIssueDetail(new IssueDetail(mockUser.getUsername() + " rejected this issue", Calendar.getInstance(), mockUser, mockIssue));
+		verify(mockIssueDetailDao).addIssueDetail(new IssueDetail(mockUser.getUsername() + " rejected this issue", calendar, mockUser, mockIssue));
 		verify(mockModel).addAttribute("active_user", "");
 		verify(mockModel).addAttribute("issues", null);
 		verify(mockModel).addAttribute("msg", " is successfully rejected");

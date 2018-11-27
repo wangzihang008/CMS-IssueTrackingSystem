@@ -69,12 +69,12 @@ public class IssueDAO {
 	 * @param adminId
 	 * @return a list of issue, given admin id
 	 */
-	public ArrayList<Issue> getIssuesByAdminId(long adminId) {
+	public ArrayList<Issue> getIssuesByAdminId(User admin) {
 		EntityManager em = emf.createEntityManager();
 
 		String str = "select i from Issue i WHERE i.admin=:admin";
 		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
-		query.setParameter("admin", adminId);
+		query.setParameter("admin", admin);
 		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
 		em.close();
 		return result;

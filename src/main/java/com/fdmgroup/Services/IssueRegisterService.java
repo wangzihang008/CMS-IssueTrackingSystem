@@ -27,6 +27,12 @@ public class IssueRegisterService {
 	private UserDAO userDao;
 	@Resource(name="departmentDAOBean")
 	private DepartmentDAO departmentDao;
+	@Resource(name="issueBean")
+	private Issue issue;
+	@Resource(name="issueDetailBean")
+	private IssueDetail issueDetail;
+	@Resource(name="calendarBean")
+	private Calendar calendar;
 	
 	public String register(String title, String content, String departmentId, String priority, 
 			HttpServletRequest req, HttpSession session) {
@@ -38,26 +44,27 @@ public class IssueRegisterService {
 		}else if("".equals(departmentId)) {
 			req.setAttribute("errorMessage", "Department of issue is missing!");
 		}else if("".equals(priority)){
-			req.setAttribute("errorMessage", "priority of issue is missing!");
+			req.setAttribute("errorMessage", "Priority of issue is missing!");
 		}else {
-			Issue issue = new Issue();
+//			Issue issue = new Issue();
 			issue.setTitle(title);
 			issue.setPriority(Integer.parseInt(priority));
-			IssueDetail issueDetail = new IssueDetail();
+//			IssueDetail issueDetail = new IssueDetail();
 			issueDetail.setContent(content);
-			Calendar calendar = Calendar.getInstance();
+//			Calendar calendar = Calendar.getInstance();
 //			System.out.println("**************" + req.getAttribute("department") + "*************");
 			Department department = departmentDao.getDepartment(Long.parseLong(departmentId));
-			ArrayList<User> depAdmins = new ArrayList<User>();
-			depAdmins.addAll(department.getAdmins());
+			ArrayList<User> depAdmins = userDao.getUserByDep(department);
+//			ArrayList<User> depAdmins = new ArrayList<User>();
+//			depAdmins.addAll(department.getAdmins());
 			User user = userDao.getUser((long)session.getAttribute("userId"));
 			issue.setCreateDate(calendar);
 			issue.setCreateUser(user);
 			issue.setDepartment(department);
 			issue.setLastUpdatedDate(calendar);
 			issue.setStatus(Status.ASSIGNED);
-			issue.setTitle(title);
-			issue.setPriority(Integer.parseInt(priority));
+//			issue.setTitle(title);
+//			issue.setPriority(Integer.parseInt(priority));
 			
 			issueDetail.setCreateDate(calendar);
 			issueDetail.setUser(user);
@@ -67,11 +74,11 @@ public class IssueRegisterService {
 			
 			if(!depAdmins.isEmpty()) {
 				User takenAdmin = depAdmins.get(0);
-				int cases = issueDao.getIssuesByAdminId(takenAdmin.getId()).size();
+				int cases = issueDao.getIssuesByAdminId(takenAdmin).size();
 				for(User admin : depAdmins) {
-					if(issueDao.getIssuesByAdminId(admin.getId()).size() < cases) {
+					if(issueDao.getIssuesByAdminId(admin).size() < cases) {
 						takenAdmin = admin;
-						cases = issueDao.getIssuesByAdminId(admin.getId()).size();
+						cases = issueDao.getIssuesByAdminId(admin).size();
 					}
 				}
 				issue.setAdmin(takenAdmin);
@@ -79,7 +86,7 @@ public class IssueRegisterService {
 			
 			issueDao.addIssue(issue);
 			req.setAttribute("message", "Issue created successful");
-			result = "dashboard";
+			result = "dashboard/customer";
 		}
 		return result;
 	}
