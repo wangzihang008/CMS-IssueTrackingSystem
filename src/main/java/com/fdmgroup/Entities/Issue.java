@@ -58,7 +58,7 @@ public class Issue {
 	private List<IssueDetail> details = new ArrayList<>();
 
 	public Issue(String title, Status status, Calendar createDate, int priority, Calendar lastUpdatedDate, User admin,
-			User createUser, Department department, List<IssueDetail> details) {
+			User createUser, Department department) {
 		super();
 		this.title = title;
 		this.status = status;
@@ -68,7 +68,6 @@ public class Issue {
 		this.admin = admin;
 		this.createUser = createUser;
 		this.department = department;
-		this.details = details;
 	}
 
 	public Issue() {

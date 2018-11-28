@@ -14,6 +14,10 @@
 	<sf:form action = "register" method = "Post" modelAttribute = "user_register">
 		Username: <sf:input path = "username" type = "text" />
 		Password: <sf:input path = "password" type = "password" />
+		<h2></h2>
+		Firstname: <sf:input path = "firstName" type = "text" />
+		Lastname: <sf:input path = "lastName" type = "text" />
+		<h2></h2>
 		<input type = "submit" value = "register!"/>
 	</sf:form>
 	

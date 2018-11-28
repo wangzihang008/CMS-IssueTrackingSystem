@@ -101,15 +101,14 @@ public class IssueDAOTest {
 	public void test_GettingIssuesByDepartment_thenReturn_CorrectIssues() {
 		
 		//arrange
-		//Issue mockIssue = mock(Issue.class);
 		TypedQuery<Issue> mockQuery = mock(TypedQuery.class);
 		Department mockDepartment = mock(Department.class);
-		when(mockDepartment.getId()).thenReturn(21L);
-		when(mockEm.createQuery("SELECT i FROM Issue i WHERE department_id = '" + mockDepartment.getId() + "'", Issue.class)).thenReturn(mockQuery);
+		when(mockDepartment.getId()).thenReturn(0L);
+		when(mockEm.createQuery("SELECT i FROM Issue i WHERE department_id = '" + mockDepartment.getId() + "' AND status = 1", Issue.class)).thenReturn(mockQuery);
 		when(mockQuery.getResultList()).thenReturn(null);
 		
 		//act
-		List<Issue> issuesByDepartment = IssueDAO.getIssuesByDepartment(mockDepartment);
+		List<Issue> issuesByDepartment = IssueDAO.getAssignedIssuesByDepartment(mockDepartment);
 		
 		//assert
 		assertEquals(issuesByDepartment, null);
@@ -154,5 +153,27 @@ public class IssueDAOTest {
 		order.verify(mockEt).commit();
 		order.verify(mockEm).close();
 		
+	}
+	
+	public void test_ChangingStatusOfAnIssue_then_DoChange() {
+		
+		//arrange
+		Issue mockIssue = mock(Issue.class);
+		Issue mockIssue2 = mock(Issue.class);
+		Status mockStatus = Status.REJECTED;
+		when(mockIssue.getId()).thenReturn(0L);
+		when(mockEm.find(Issue.class, mockIssue.getId())).thenReturn(mockIssue2);
+		
+		//act
+		IssueDAO.changeStatus(mockIssue, mockStatus);
+		
+		//assert
+		InOrder order = inOrder(mockEmf, mockEm, mockEt, mockIssue2);
+		order.verify(mockEmf).createEntityManager();
+		order.verify(mockEm).getTransaction();
+		order.verify(mockEt).begin();
+		order.verify(mockIssue2).setStatus(mockStatus);
+		order.verify(mockEt).commit();
+		order.verify(mockEm).close();
 	}
 }

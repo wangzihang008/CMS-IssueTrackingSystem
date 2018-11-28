@@ -24,60 +24,32 @@ public class JpaRunner {
 	public static void main(String[] args) {
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EMF");
-		/*
-		Department d1 = new Department("marketing", null);
-		DepartmentDAO dDao = new DepartmentDAO(emf);
-		dDao.addDepartment(d1);
-		
-		User u1 = new User("qz", "qzz", Type.DEPARTMENT_ADMIN, Status.UNASSIGNED, d1,
-				"q", "z", null);
-		UserDAO uDao = new UserDAO(emf);
-		uDao.addUser(u1);
-		
-		Department d2 = new Department("tech", null);
-		Department d3 = new Department("general", null);
 
 		
-		dDao.addDepartment(d2);
-		dDao.addDepartment(d3);
-		*/
-		Department d1 = new Department("technical");
+		Department d1 = new Department("Development");
+		Department d2 = new Department("Support");
 		DepartmentDAO dDao = new DepartmentDAO(emf);
 		dDao.addDepartment(d1);
-		User u1 = new User("qzz", "qzz", Type.DEPADMIN, Status.UNASSIGNED, d1,
-				"q", "z");
-		//IssueDAO iDao = new IssueDAO(emf);
-		//IssueDetailDAO idDao = new IssueDetailDAO(emf);
+		dDao.addDepartment(d2);
+		
+		User u1 = new User("abc", "abc", Type.DEPADMIN, Status.ACTIVE, d1, "Chris", "Brown");
+		User u2 = new User("abcd", "abcd", Type.DEPADMIN, Status.ACTIVE, d2, "JK", "Rowling");
+		User u3 = new User("abcde", "abcde", Type.ADMIN, Status.ACTIVE, null, "Warren", "G");
+		User u4 = new User("abcdef", "abcdef", Type.ADMIN, Status.ACTIVE, null, "Jimmy", "Butler");
+		User u5 = new User("abcdeg", "abcdefg", Type.ADMIN, Status.ACTIVE, null, "Kobe", "Byrant");
 		UserDAO uDao = new UserDAO(emf);
 		uDao.addUser(u1);
-		//Issue i = iDao.getIssue(23);
-		//User u = uDao.get("qz");
-		//IssueDetail id = new IssueDetail("ccc", Calendar.getInstance(), u, i, null);
-		//System.out.println(idDao.getIssueDetailsByIssue(i));
-		//iDao.addDetail(i, "dddd", u);
-		//Issue i1 = new Issue("aaaaaaa", Status.ASSIGNED, Calendar.getInstance(), Calendar.getInstance(), null,
-		//		null, d1, null);
+		uDao.addUser(u2);
+		uDao.addUser(u3);
+		uDao.addUser(u4);
+		uDao.addUser(u5);
 		
-		//Issue i2 = new Issue("bbb", Status.UNASSIGNED, Calendar.getInstance(), Calendar.getInstance(), null,
-		//		null, d1, null);
-		/*
-		Issue i3 = new Issue("ccc", Status.UNASSIGNED, Calendar.getInstance(), Calendar.getInstance(), null,
-				null, d3, null);
-		*/
-		//EntityManager em = emf.createEntityManager();
-			
-		//iDao.addIssue(i1);
+
+
 		
-		//iDao.addIssue(i2);
-		/*
-		iDao.addIssue(i3);
-		*/
-		//String t = "aaa";
-		//Query query = em.createQuery(
-		//		"SELECT title FROM Issue WHERE title = '" +t+ "'", String.class);
-		//List<String> issues = iDao.getIssuesByDepartment(d1);
-		//System.out.println(issues);
 		
+		
+
 	}
 
 }

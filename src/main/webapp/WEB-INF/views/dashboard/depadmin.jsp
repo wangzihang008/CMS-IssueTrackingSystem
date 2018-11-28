@@ -15,6 +15,8 @@
 	
 	<h1>Welcome ${active_user}</h1>
 	
+	<span style="color: red;">${msg}</span>
+	
 	<h3>
 		Your issues to deal with: <br>
 		<c:forEach items="${issues}" var="individual_issue">
@@ -33,7 +35,7 @@
 		<input type="submit" value="manage this issue">
 	</sf:form>
 	
-	<span style="color: red;">${msg}</span>
+	<span style="color: red;">${select_msg}</span>
 	
 </body>
 </html>

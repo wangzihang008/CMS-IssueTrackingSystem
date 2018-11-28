@@ -80,10 +80,10 @@ public class IssueDAO {
 		return result;
 	}
 
-	public List<Issue> getIssuesByDepartment(Department department) {
+	public List<Issue> getAssignedIssuesByDepartment(Department department) {
 
 		EntityManager em = emf.createEntityManager();
-		Query query = em.createQuery("SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "'",
+		Query query = em.createQuery("SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1",
 				Issue.class);
 		List<Issue> issues = query.getResultList();
 		return issues;
@@ -102,4 +102,16 @@ public class IssueDAO {
 		et.commit();
 		em.close();
 	}
+
+	public void changeStatus(Issue issue, Status status) {
+		
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		Issue accessedIssue = em.find(Issue.class, issue.getId());
+		et.begin();
+		accessedIssue.setStatus(status);
+		et.commit();
+		em.close();
+	}
+
 }
