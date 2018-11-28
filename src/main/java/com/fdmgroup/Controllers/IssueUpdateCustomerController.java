@@ -20,10 +20,11 @@ public class IssueUpdateCustomerController {
 	@Resource(name="IssueUpdateCustomerServiceBean")
 	private IssueUpdateCustomerService iucs;
 	
-	@RequestMapping(value= {"/issue/update/customer", "/issue/update/customer/{issueId}"}, method=RequestMethod.GET)
-	public String goToUpdate(Model model) {
-		model.addAttribute("newIssueDetail", new IssueDetail());
-		return "/issue/update/customer";
+	@RequestMapping(value= {"/issue/update/customer/{issueId}"}, method=RequestMethod.GET)
+	public String goToUpdate(Model model, HttpServletRequest req, HttpSession session,
+			@PathVariable String issueId) {
+		String forward = iucs.check(issueId, model, req, session);
+		return forward;
 	}
 	
 	@RequestMapping(value="/issue/update/customer/{issueId}", method=RequestMethod.POST)

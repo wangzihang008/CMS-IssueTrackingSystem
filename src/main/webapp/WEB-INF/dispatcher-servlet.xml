@@ -39,7 +39,7 @@
 	
 	<bean id="issueBean" class="com.fdmgroup.Entities.Issue"/>
 	
-	<bean id="issueDetailBean" class="com.fdmgroup.Entities.IssueDetail"/>
+	<bean id="issueDetailBean" class="com.fdmgroup.Entities.IssueDetail" scope="prototype"/>
 	
-	<bean id="calendarBean" class="java.util.Calendar" factory-method="getInstance" />
+	<bean id="calendarBean" class="java.util.Calendar" factory-method="getInstance" scope="prototype"/>
 </beans>

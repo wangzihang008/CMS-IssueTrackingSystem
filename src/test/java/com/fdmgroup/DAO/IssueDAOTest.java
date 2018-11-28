@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Query;
@@ -24,7 +25,9 @@ import org.mockito.MockitoAnnotations;
 
 import com.fdmgroup.Entities.Department;
 import com.fdmgroup.Entities.Issue;
+import com.fdmgroup.Entities.IssueDetail;
 import com.fdmgroup.Entities.User;
+import com.fdmgroup.Enum.Status;
 
 public class IssueDAOTest {
 	
@@ -110,5 +113,46 @@ public class IssueDAOTest {
 		
 		//assert
 		assertEquals(issuesByDepartment, null);
+	}
+	
+	@Test
+	public void When_IssueDAO_Given_updateWithIssue_Then_updateAndClearResorces() {
+		Issue mockIssue = mock(Issue.class);
+		Issue mockModifyIssue = mock(Issue.class);
+		long issueId = 123;
+		User user = mock(User.class);
+		Department department = mock(Department.class);
+		Calendar calendar = mock(Calendar.class);
+		Status status = Status.ACTIVE;
+		ArrayList<IssueDetail> details = new ArrayList<IssueDetail>();
+		
+		when(mockIssue.getId()).thenReturn(issueId); 
+		when(mockEm.find(Issue.class, issueId)).thenReturn(mockModifyIssue);
+		when(mockIssue.getAdmin()).thenReturn(user);
+		when(mockIssue.getDepartment()).thenReturn(department);
+		when(mockIssue.getLastUpdatedDate()).thenReturn(calendar);
+		when(mockIssue.getStatus()).thenReturn(status);
+		when(mockIssue.getDetails()).thenReturn(details);
+		
+		IssueDAO.update(mockIssue);
+		
+		InOrder order = inOrder(mockEmf, mockEm, mockEt, mockIssue, mockModifyIssue);
+		order.verify(mockEm).getTransaction();
+		order.verify(mockIssue).getId();
+		order.verify(mockEm).find(Issue.class, mockIssue.getId());
+		order.verify(mockEt).begin();
+		order.verify(mockIssue).getAdmin();
+		order.verify(mockModifyIssue).setAdmin(user);
+		order.verify(mockIssue).getDepartment();
+		order.verify(mockModifyIssue).setDepartment(department);
+		order.verify(mockIssue).getLastUpdatedDate();
+		order.verify(mockModifyIssue).setLastUpdatedDate(calendar);
+		order.verify(mockIssue).getStatus();
+		order.verify(mockModifyIssue).setStatus(status);
+		order.verify(mockIssue).getDetails();
+		order.verify(mockModifyIssue).setDetails(details);
+		order.verify(mockEt).commit();
+		order.verify(mockEm).close();
+		
 	}
 }

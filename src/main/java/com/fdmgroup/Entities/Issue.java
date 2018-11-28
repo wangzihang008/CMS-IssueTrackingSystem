@@ -42,18 +42,18 @@ public class Issue {
 	private Calendar lastUpdatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "ADMIN_ID")
 	private User admin;
 
 	@ManyToOne
-	@JoinColumn(name = "USER_ID", insertable = false, updatable = false)
+	@JoinColumn(name = "USER_ID")
 	private User createUser;
 
 	@ManyToOne
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
-	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
