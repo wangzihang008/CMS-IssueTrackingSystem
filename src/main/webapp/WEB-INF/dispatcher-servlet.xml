@@ -25,6 +25,7 @@
 		factory-method="createEntityManagerFactory">
 		<constructor-arg value="EMF" />
 	</bean>
+
 	<bean id="userDAOBean" class="com.fdmgroup.DAO.UserDAO" />
 
 	<bean id="departmentDAOBean" class="com.fdmgroup.DAO.DepartmentDAO" />
@@ -38,6 +39,10 @@
 	<bean id="customerIssueRegisterBean" class="com.fdmgroup.Services.IssueRegisterService" />
 
 	<bean id="IssueUpdateCustomerServiceBean" class="com.fdmgroup.Services.IssueUpdateCustomerService" />
+
+	<bean id="issueDetailServiceBean" class="com.fdmgroup.Services.IssueDetailService" />
+
+	<bean id="issueReassignServiceBean" class="com.fdmgroup.Services.IssueReassignService" />
 
 	<bean id="issueBean" class="com.fdmgroup.Entities.Issue" />
 

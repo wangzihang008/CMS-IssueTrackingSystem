@@ -10,10 +10,10 @@ import com.fdmgroup.Entities.IssueDetail;
 
 public class IssueDetailService {
 
-	@Resource
+	@Resource(name = "issueDetailDAOBean")
 	private IssueDetailDAO issueDetailDAO;
-	
-	public ArrayList<IssueDetail> displayAllDetails(Issue issue){
+
+	public ArrayList<IssueDetail> displayAllDetails(Issue issue) {
 		return issueDetailDAO.getIssueDetailsByIssue(issue);
 	}
 }

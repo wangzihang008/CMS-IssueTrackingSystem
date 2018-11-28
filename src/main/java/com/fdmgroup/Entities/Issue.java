@@ -45,7 +45,7 @@ public class Issue {
 	@JoinColumn(name = "ADMIN_ID")
 	private User admin;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
 	private User createUser;
 

@@ -83,19 +83,30 @@ public class IssueDAO {
 	public List<Issue> getAssignedIssuesByDepartment(Department department) {
 
 		EntityManager em = emf.createEntityManager();
-		Query query = em.createQuery("SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1",
-				Issue.class);
+		Query query = em.createQuery(
+				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1", Issue.class);
 		List<Issue> issues = query.getResultList();
 		return issues;
 	}
-	
+
 	public void changeStatus(Issue issue, Status status) {
-		
+
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		Issue accessedIssue = em.find(Issue.class, issue.getId());
 		et.begin();
 		accessedIssue.setStatus(status);
+		et.commit();
+		em.close();
+	}
+
+	public void reassignHelper(Issue issue, Department department, User admin) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		Issue accessedIssue = em.find(Issue.class, issue.getId());
+		et.begin();
+		accessedIssue.setDepartment(department);
+		accessedIssue.setAdmin(admin);
 		et.commit();
 		em.close();
 	}

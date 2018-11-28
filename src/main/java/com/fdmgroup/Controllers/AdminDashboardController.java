@@ -20,7 +20,7 @@ public class AdminDashboardController {
 	@Resource(name = "adminDashboardServiceBean")
 	private AdminDashboardService ads;
 
-	@RequestMapping(value = "dashboard/admin", method = RequestMethod.GET)
+	@RequestMapping(value = "/dashboard/admin", method = RequestMethod.GET)
 	public String goToAdminDashboard(HttpServletRequest req, HttpSession session, Model model) {
 		// TODO Auto-generated method stub
 		if (session.getAttribute("userType").equals(Type.ADMIN)) {

@@ -15,13 +15,6 @@
 			<c:forEach items="${allDepartment}" var="item">
 				<option value="${item['id']}"><c:out value="${item.name}" /></option>
 			</c:forEach>
-		</select>
-		<select name="priority">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-			<option value="5">5</option>
 		</select> <input type="submit" value="submit" />
 	</form>
 </body>

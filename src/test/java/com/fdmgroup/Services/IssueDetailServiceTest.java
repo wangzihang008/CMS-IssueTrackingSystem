@@ -14,9 +14,10 @@ import com.fdmgroup.Entities.Issue;
 public class IssueDetailServiceTest {
 
 	@Mock
-	private IssueDetailDAO issueDetailDAO;
+	private IssueDetailDAO mockIssueDetailDAO;
 	
-	@Mock Issue mockIssue;
+	@Mock
+	private Issue mockIssue;
 	
 	@InjectMocks
 	private IssueDetailService ids = new IssueDetailService();
@@ -27,8 +28,8 @@ public class IssueDetailServiceTest {
 	}
 	
 	@Test
-	public void Given_IssueDetailService_When_displayDetails_Then_returnAllIssues() {
+	public void Given_IssueDetailService_When_displayDetails_Then_callGetIssueDetailsByIssue() {
 		ids.displayAllDetails(mockIssue);
-		verify(issueDetailDAO).getIssueDetailsByIssue(mockIssue);
+		verify(mockIssueDetailDAO).getIssueDetailsByIssue(mockIssue);
 	}
 }
