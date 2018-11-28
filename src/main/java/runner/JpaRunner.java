@@ -24,6 +24,7 @@ public class JpaRunner {
 	public static void main(String[] args) {
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("EMF");
+
 		
 		Department d1 = new Department("Development");
 		Department d2 = new Department("Support");
@@ -48,6 +49,7 @@ public class JpaRunner {
 		
 		
 		
+
 	}
 
 }

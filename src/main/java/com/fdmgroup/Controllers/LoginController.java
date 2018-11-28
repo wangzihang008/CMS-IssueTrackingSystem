@@ -72,13 +72,13 @@ public class LoginController {
 			if (user2.getType().equals(Type.CUSTOMER)) {
 				return "dashboard/customer";
 
-			} else if (user2.getType().equals(Type.ADMIN)) {
+			} else if (user2.getType() == Type.ADMIN) {
 				return "dashboard/admin";
 
 			} else {
 		
 				model.addAttribute("active_user", user2.getUsername());
-				List<Issue> issues = iDao.getIssuesByDepartment(user2.getDepartment());
+				List<Issue> issues = iDao.getAssignedIssuesByDepartment(user2.getDepartment());
 				model.addAttribute("issues", issues);
 				return "dashboard/depadmin";
 			}
