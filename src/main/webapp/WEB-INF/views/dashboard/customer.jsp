@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<table>
+	<table>
 		<tr>
 			<td>issue ID</td>
 			<td>issue title</td>
@@ -27,19 +27,17 @@
 				<td>${issue.status}</td>
 				<td>${issue.priority}</td>
 				<td>
-				<form
-					action="issue/update/approve/${issue.id}">
-					<input type="sumbit" value="issueDetail">
-				</form>
+					<form action="issue/update/approve/${issue.id}">
+						<input type="sumbit" value="issueDetail">
+					</form>
 				</td>
-			
-			<td>
-				<form
-					action="issue/update/approved/${issue.id}">
-					<input type="sumbit" value="approve">
-				</form>
+
+				<td>
+					<form action="issue/update/approved/${issue.id}">
+						<input type="sumbit" value="approve">
+					</form>
 				</td>
-			
+${error}
 			</tr>
 		</c:forEach>
 	</table>

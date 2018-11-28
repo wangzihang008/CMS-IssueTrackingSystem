@@ -29,6 +29,10 @@ public class IssueApprovedController {
 	public String approve(@PathVariable String id, HttpServletRequest request) {
 		long issueID = Long.parseLong(id);
 		Issue issue = issueDAO.getIssue(issueID);
+		if(issue == null) {
+			request.getSession().setAttribute("error", "issue not found");
+			return "dashboard/customer";
+		}
 		issue.setStatus(Status.APPROVED);
 		HttpSession session = request.getSession();
 		String name = (String) session.getAttribute("userName");
