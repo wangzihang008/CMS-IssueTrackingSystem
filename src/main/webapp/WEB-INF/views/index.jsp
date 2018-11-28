@@ -13,8 +13,8 @@
 	<c:if test="${errorMessage != null}">
 		<h4>${errorMessage}</h4>
 	</c:if>
-	<a href="login">go to login</a>
+	<a href="/IssueTrackingSystem/login">go to login</a>
 	<h1></h1>
-	<a href="register">go to register</a>
+	<a href="/IssueTrackingSystem/register">go to register</a>
 </body>
 </html>

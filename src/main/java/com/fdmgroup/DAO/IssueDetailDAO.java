@@ -53,4 +53,5 @@ public class IssueDetailDAO {
 		List<IssueDetail> issueDetails = query.getResultList();
 		return issueDetails;
 	}
+
 }
