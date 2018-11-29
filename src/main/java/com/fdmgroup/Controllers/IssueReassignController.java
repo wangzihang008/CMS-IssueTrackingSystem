@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fdmgroup.DAO.DepartmentDAO;
 import com.fdmgroup.Services.IssueReassignService;
@@ -25,11 +26,11 @@ public class IssueReassignController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToIssueReassign(Model model) {
 		model.addAttribute("allDepartment", departmentDAO.getAllDepartment());
-		return "issue/reassign";
+		return "dashboard/admin";
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public String goToDashboard(@PathVariable long issueId, String department, Model model) {
+	public String goToDashboard(@PathVariable long issueId, @RequestParam String department, Model model) {
 		irs.reassign(issueId, department);
 		model.addAttribute("reassignMsg", "Reassign success. See updated dashboard");
 		return "dashboard/admin";

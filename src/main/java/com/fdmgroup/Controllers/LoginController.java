@@ -75,7 +75,8 @@ public class LoginController {
 			session.setAttribute("userId", user2.getId());
 			session.setAttribute("userType", user2.getType());
 			if (user2.getType().equals(Type.CUSTOMER)) {
-				List<Issue> list = user2.getIssues();
+				long userId = (long) session.getAttribute("userId");
+				List<Issue> list = iDao.getIssuesByUserId(userId);
 				session.setAttribute("issueList", list);
 				return "dashboard/customer";
 			} else if (user2.getType() == Type.ADMIN) {

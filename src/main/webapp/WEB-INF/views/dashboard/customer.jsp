@@ -26,19 +26,20 @@
 				<td>${issue.title}</td>
 				<td>${issue.status}</td>
 				<td>${issue.priority}</td>
-				<td>
-					<form action="issue/update/approve/${issue.id}">
-						<input type="submit" value="issueDetail">
-					</form>
+				<td><a href="/IssueTrackingSystem/issue/detail/${issue.id}">IssueDetail</a>
 				</td>
 
-				<td>
-					<form action="issue/update/approved/${issue.id}">
-						<input type="submit" value="approve">
-					</form>
-				</td> ${error}
+				<td><c:if test="${issue.status eq 'RESOLVED'}">
+						<form action="issue/update/approved/${issue.id}">
+							<input type="submit" value="approve">
+						</form>
+					</c:if></td>
 			</tr>
+			${error}
 		</c:forEach>
 	</table>
+	<span style="color: red;">${approveMsg}</span>
+	<a href="${pageContext.request.contextPath}/issue/register">register
+		issue</a>
 </body>
 </html>

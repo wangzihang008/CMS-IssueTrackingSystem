@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fdmgroup.DAO.DepartmentDAO;
 import com.fdmgroup.Entities.Issue;
 import com.fdmgroup.Enum.Type;
 import com.fdmgroup.Services.AdminDashboardService;
@@ -20,6 +21,9 @@ public class AdminDashboardController {
 	@Resource(name = "adminDashboardServiceBean")
 	private AdminDashboardService ads;
 
+	@Resource(name = "departmentDAOBean")
+	private DepartmentDAO departmentDAO;
+	
 	@RequestMapping(value = "/dashboard/admin", method = RequestMethod.GET)
 	public String goToAdminDashboard(HttpServletRequest req, HttpSession session, Model model) {
 		// TODO Auto-generated method stub
@@ -27,6 +31,7 @@ public class AdminDashboardController {
 			ArrayList<Issue> issues = ads.getAllIssues();
 			if (!issues.isEmpty()) {
 				model.addAttribute("issues", issues);
+				model.addAttribute("allDepartment", departmentDAO.getAllDepartment());
 			}
 		} else {
 			req.setAttribute("errorMessage", "You are not an admin user!");

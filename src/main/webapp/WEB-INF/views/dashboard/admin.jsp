@@ -22,6 +22,8 @@
 					<td>Issue Title</td>
 					<td>Issue Create Date</td>
 					<td>Issue Status</td>
+					<td>Details</td>
+					<td>Reassign</td>
 				</tr>
 			</thead>
 			<c:forEach items="${issues}" var="item">
@@ -32,12 +34,21 @@
 					<td>${item.status}</td>
 					<td><a href="/IssueTrackingSystem/issue/detail/${item.id}">Details</a></td>
 					<td><c:if test="${item.status eq 'REQUESTED'}">
-							<a href="/IssueTrackingSystem/issue/reassign/${item.id}">Reassign</a>
+							<form action="/IssueTrackingSystem/issue/reassign/${item.id}"
+								method="POST">
+								<select name="department">
+									<c:forEach items="${allDepartment}" var="item">
+										<option value="${item['name']}"><c:out
+												value="${item.name}" /></option>
+									</c:forEach>
+								</select> <input type="submit" value="submit" />
+							</form>
 						</c:if></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</div>
-	<span style="color: red;">${reassignMsg}</span>
+	<span style="color: red;">${reassignMsg}<a
+		href="/IssueTrackingSystem/dashboard/admin">Back to dashboard</a></span>
 </body>
 </html>

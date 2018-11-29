@@ -61,6 +61,7 @@ public class IssueDAO {
 		String str = "select i from Issue i";
 		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
 		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
 		return result;
 	}
 
@@ -80,6 +81,16 @@ public class IssueDAO {
 		return result;
 	}
 
+	public ArrayList<Issue> getIssuesByUserId(long userId) {
+		EntityManager em = emf.createEntityManager();
+
+		String str = "select i from Issue i WHERE user_id = " + userId;
+		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
+		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
+		return result;
+	}
+	
 	public List<Issue> getAssignedIssuesByDepartment(Department department) {
 
 		EntityManager em = emf.createEntityManager();
@@ -98,7 +109,7 @@ public class IssueDAO {
 		issue1.setDepartment(issue.getDepartment());
 		issue1.setLastUpdatedDate(issue.getLastUpdatedDate());
 		issue1.setStatus(issue.getStatus());
-		issue1.setDetails(issue.getDetails());
+//		issue1.setDetails(issue.getDetails());
 		et.commit();
 		em.close();
 	}
