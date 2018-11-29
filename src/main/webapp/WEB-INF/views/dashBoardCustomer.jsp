@@ -43,5 +43,8 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<HR>
+	register issue: <a href="${pageContext.request.contextPath}/issue/register">click me!</a>
+	
 </body>
 </html>
