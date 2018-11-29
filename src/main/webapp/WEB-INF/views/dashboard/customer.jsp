@@ -42,5 +42,7 @@ ${error}
 		</c:forEach>
 	</table>
 
+<a href="${pageContext.request.contextPath}/issue/register">register issue</a>
+
 </body>
 </html>
