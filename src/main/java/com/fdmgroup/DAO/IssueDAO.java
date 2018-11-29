@@ -89,6 +89,20 @@ public class IssueDAO {
 		return issues;
 	}
 	
+	public void update(Issue issue) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		Issue issue1 = em.find(Issue.class, issue.getId());
+		et.begin();
+		issue1.setAdmin(issue.getAdmin());
+		issue1.setDepartment(issue.getDepartment());
+		issue1.setLastUpdatedDate(issue.getLastUpdatedDate());
+		issue1.setStatus(issue.getStatus());
+		issue1.setDetails(issue.getDetails());
+		et.commit();
+		em.close();
+	}
+
 	public void changeStatus(Issue issue, Status status) {
 		
 		EntityManager em = emf.createEntityManager();

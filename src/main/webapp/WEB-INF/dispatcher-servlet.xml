@@ -38,11 +38,11 @@
 	<bean id="customerIssueRegisterBean" class="com.fdmgroup.Services.IssueRegisterService" />
 
 	<bean id="IssueUpdateCustomerServiceBean" class="com.fdmgroup.Services.IssueUpdateCustomerService" />
-
-	<bean id="issueBean" class="com.fdmgroup.Entities.Issue" />
-
-	<bean id="issueDetailBean" class="com.fdmgroup.Entities.IssueDetail" />
-
-	<bean id="calendarBean" class="java.util.Calendar" factory-method="getInstance" />
+	
+	<bean id="issueBean" class="com.fdmgroup.Entities.Issue"/>
+	
+	<bean id="issueDetailBean" class="com.fdmgroup.Entities.IssueDetail" scope="prototype"/>
+	
+	<bean id="calendarBean" class="java.util.Calendar" factory-method="getInstance" scope="prototype"/>
 
 </beans>

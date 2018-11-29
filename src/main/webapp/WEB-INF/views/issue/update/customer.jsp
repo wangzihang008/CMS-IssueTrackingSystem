@@ -11,7 +11,7 @@
 </head>
 <body>
 	<h2>New Update</h2>
-	<sf:form action="customer" method="POST"
+	<sf:form action="${issueId}" method="POST"
 		modelAttribute="newIssueDetail">
 		<sf:textarea path="content" placeholder="Input New Update Content"/>
 		<input type="submit" value="Submit">
