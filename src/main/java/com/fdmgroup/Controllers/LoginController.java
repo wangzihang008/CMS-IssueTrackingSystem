@@ -1,5 +1,6 @@
 package com.fdmgroup.Controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -19,6 +20,7 @@ import com.fdmgroup.Entities.Issue;
 import com.fdmgroup.Entities.User;
 import com.fdmgroup.Enum.Status;
 import com.fdmgroup.Enum.Type;
+import com.fdmgroup.Services.AdminDashboardService;
 
 @Controller
 @RequestMapping(value = "/login")
@@ -29,6 +31,9 @@ public class LoginController {
 
 	@Resource(name = "issueDAOBean")
 	private IssueDAO iDao;
+
+	@Resource(name = "adminDashboardServiceBean")
+	private AdminDashboardService ads;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String goToLogin(Model model, HttpSession session) {
@@ -50,7 +55,7 @@ public class LoginController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public String Login(Model model, User user, HttpSession session, HttpServletRequest request) {
-		
+
 		model.addAttribute("blank_user_login", user);
 		String name = user.getUsername();
 		String password = user.getPassword();
@@ -64,19 +69,23 @@ public class LoginController {
 			request.setAttribute("fail_msg", "Error");
 			return "login";
 		}
-		
+
 		else {
 			session.setAttribute("userName", name);
 			session.setAttribute("userId", user2.getId());
 			session.setAttribute("userType", user2.getType());
 			if (user2.getType().equals(Type.CUSTOMER)) {
+				List<Issue> list = user2.getIssues();
+				session.setAttribute("issueList", list);
 				return "dashboard/customer";
-
 			} else if (user2.getType() == Type.ADMIN) {
+				ArrayList<Issue> issues = ads.getAllIssues();
+				if (!issues.isEmpty()) {
+					model.addAttribute("issues", issues);
+				}
 				return "dashboard/admin";
 
 			} else {
-		
 				model.addAttribute("active_user", user2.getUsername());
 				List<Issue> issues = iDao.getAssignedIssuesByDepartment(user2.getDepartment());
 				model.addAttribute("issues", issues);

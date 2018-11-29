@@ -21,7 +21,7 @@
 	
 	<span style="color: red;">${msg}</span>
 	<br>
-	<a href="http://localhost:8088/IssueTrackingSystem/dashboard/depadmin">back to dashboard</a>
+	<a href="/IssueTrackingSystem/dashboard/depadmin">back to dashboard</a>
 	
 </body>
 </html>

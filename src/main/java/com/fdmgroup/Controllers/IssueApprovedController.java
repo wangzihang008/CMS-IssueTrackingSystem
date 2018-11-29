@@ -26,9 +26,8 @@ public class IssueApprovedController {
 	UserDAO userDAO;
 
 	@RequestMapping(value = "issue/update/approved/{id}")
-	public String approve(@PathVariable String id, HttpServletRequest request) {
-		long issueID = Long.parseLong(id);
-		Issue issue = issueDAO.getIssue(issueID);
+	public String approve(@PathVariable long id, HttpServletRequest request) {
+		Issue issue = issueDAO.getIssue(id);
 		if(issue == null) {
 			request.getSession().setAttribute("error", "issue not found");
 			return "dashboard/customer";
@@ -39,7 +38,6 @@ public class IssueApprovedController {
 		User user = userDAO.get(name);
 		List<Issue> list = user.getIssues();
 		session.setAttribute("issueList", list);
-
 		return "dashboard/customer";
 
 	}

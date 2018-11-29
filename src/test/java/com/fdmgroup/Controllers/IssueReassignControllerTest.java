@@ -44,7 +44,7 @@ public class IssueReassignControllerTest {
 	
 	@Test
 	public void Given_issueReassignController_When_goToDashboard_Then_returnDashboardJspPage() {
-		String nextPage = irc.goToDashboard(5, mockReq, mockModel);
+		String nextPage = irc.goToDashboard(5, "Development", mockModel);
 		assertEquals(nextPage, "dashboard/admin");
 	}
 }

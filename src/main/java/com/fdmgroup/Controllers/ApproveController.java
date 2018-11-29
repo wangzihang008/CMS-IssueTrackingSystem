@@ -20,9 +20,8 @@ public class ApproveController {
 	private IssueDAO issueDAO;
 	
 	@RequestMapping(value="issue/update/approve/{id}")
-	public String toApprove(@PathVariable String id, HttpServletRequest request) {
-		long issueID=Long.parseLong(id);
-		Issue issue = issueDAO.getIssue(issueID);
+	public String toApprove(@PathVariable int id, HttpServletRequest request) {
+		Issue issue = issueDAO.getIssue(id);
 		List<IssueDetail> list = issue.getDetails();
 		request.getSession().setAttribute("list", list);
 		return "issue/update/approve";

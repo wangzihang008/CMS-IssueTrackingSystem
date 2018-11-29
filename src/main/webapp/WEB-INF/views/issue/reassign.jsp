@@ -10,6 +10,7 @@
 <title>Reassign</title>
 </head>
 <body>
+	<h1>Select the department you want to reassign to</h1>
 	<form action="/IssueTrackingSystem/issue/reassign" method="POST">
 		<select name="department">
 			<c:forEach items="${allDepartment}" var="item">
@@ -17,5 +18,6 @@
 			</c:forEach>
 		</select> <input type="submit" value="submit" />
 	</form>
+	<a href="/IssueTrackingSystem/dashboard/admin">Back to dashboard</a>
 </body>
 </html>

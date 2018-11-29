@@ -11,9 +11,6 @@
 </head>
 <body>
 	<div>
-		<a href="/IssueTrackingSystem/issue/register/">Register New Issue</a>
-	</div>
-	<div>
 		<h4>All Issues</h4>
 		<c:if test="${issues == null}">
 			<p>There is no issue</p>
@@ -41,5 +38,6 @@
 			</c:forEach>
 		</table>
 	</div>
+	<span style="color: red;">${reassignMsg}</span>
 </body>
 </html>
