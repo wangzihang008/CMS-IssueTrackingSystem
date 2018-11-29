@@ -53,7 +53,7 @@ public class Issue {
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
-	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 

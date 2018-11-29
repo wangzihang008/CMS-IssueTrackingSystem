@@ -26,7 +26,7 @@ public class Department {
 	@Column(name = "DEPARTMENT_NAME")
 	private String name;
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Column(name = "LIST_ADMINS")
 	private List<User> admins = new ArrayList<>();
 
@@ -68,7 +68,7 @@ public class Department {
 	public void setAdmins(List<User> admins) {
 		this.admins = admins;
 	}
-	
+
 	public void addAdmin(User admin) {
 		admins.add(admin);
 		admin.setDepartment(this);

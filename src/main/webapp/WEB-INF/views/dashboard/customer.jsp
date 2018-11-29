@@ -28,16 +28,15 @@
 				<td>${issue.priority}</td>
 				<td>
 					<form action="issue/update/approve/${issue.id}">
-						<input type="sumbit" value="issueDetail">
+						<input type="submit" value="issueDetail">
 					</form>
 				</td>
 
 				<td>
 					<form action="issue/update/approved/${issue.id}">
-						<input type="sumbit" value="approve">
+						<input type="submit" value="approve">
 					</form>
-				</td>
-${error}
+				</td> ${error}
 			</tr>
 		</c:forEach>
 	</table>

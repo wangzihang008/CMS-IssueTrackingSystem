@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 public class DashboardCustomerTest {
 
 	@Test
-	public void TestDeshBoardCustomer() {
+	public void TestDashBoardCustomer() {
 		DashBoardCustomer db = new DashBoardCustomer();
 		
 		HttpServletRequest request = null;

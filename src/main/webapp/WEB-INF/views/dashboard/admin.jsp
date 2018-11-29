@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div>
-		<a href="/issue/register/">Register New Issue</a>
+		<a href="/IssueTrackingSystem/issue/register/">Register New Issue</a>
 	</div>
 	<div>
 		<h4>All Issues</h4>
@@ -19,21 +19,24 @@
 			<p>There is no issue</p>
 		</c:if>
 		<table>
-		<thead>
-		<tr>
-			<td>Issue ID</td>
-			<td>Issue Title</td>
-			<td>Issue Create Date</td>
-			<td>Issue Status</td>
-		</tr>
-		</thead>
+			<thead>
+				<tr>
+					<td>Issue ID</td>
+					<td>Issue Title</td>
+					<td>Issue Create Date</td>
+					<td>Issue Status</td>
+				</tr>
+			</thead>
 			<c:forEach items="${issues}" var="item">
 				<tr>
 					<td>${item.id}</td>
 					<td>${item.title}</td>
 					<td>${item.createDate.time}</td>
 					<td>${item.status}</td>
-					<td><a href="issue/detail/${item.id}">Details</a></td>
+					<td><a href="/IssueTrackingSystem/issue/detail/${item.id}">Details</a></td>
+					<td><c:if test="${item.status eq 'REQUESTED'}">
+							<a href="/IssueTrackingSystem/issue/reassign/${item.id}">Reassign</a>
+						</c:if></td>
 				</tr>
 			</c:forEach>
 		</table>

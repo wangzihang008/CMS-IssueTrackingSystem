@@ -18,32 +18,32 @@ import com.fdmgroup.Entities.User;
 import com.fdmgroup.Enum.Status;
 
 public class IssueRegisterService {
-	
-	@Resource(name="issueDAOBean")
+
+	@Resource(name = "issueDAOBean")
 	private IssueDAO issueDao;
-	@Resource(name="issueDetailDAOBean")
+	@Resource(name = "issueDetailDAOBean")
 	private IssueDetailDAO issueDetailDao;
-	@Resource(name="userDAOBean")
+	@Resource(name = "userDAOBean")
 	private UserDAO userDao;
-	@Resource(name="departmentDAOBean")
+	@Resource(name = "departmentDAOBean")
 	private DepartmentDAO departmentDao;
-	@Resource(name="issueBean")
+	@Resource(name = "issueBean")
 	private Issue issue;
-	@Resource(name="issueDetailBean")
+	@Resource(name = "issueDetailBean")
 	private IssueDetail issueDetail;
-	@Resource(name="calendarBean")
+	@Resource(name = "calendarBean")
 	private Calendar calendar;
-	
-	public String register(String title, String content, String departmentId, String priority, 
-			HttpServletRequest req, HttpSession session) {
+
+	public String register(String title, String content, String departmentId, String priority, HttpServletRequest req,
+			HttpSession session) {
 		String result = "issue/register";
-		if("".equals(content)) {
+		if ("".equals(content)) {
 			req.setAttribute("errorMessage", "Content of issue is missing!");
-		}else if("".equals(title)){
+		} else if ("".equals(title)) {
 			req.setAttribute("errorMessage", "Title of issue is missing!");
-		}else if("".equals(departmentId)) {
+		} else if ("".equals(departmentId)) {
 			req.setAttribute("errorMessage", "Department of issue is missing!");
-		}else if("".equals(priority)){
+		} else if ("".equals(priority)) {
 			req.setAttribute("errorMessage", "Priority of issue is missing!");
 		}else {
 			issue.setTitle(title);
@@ -57,31 +57,30 @@ public class IssueRegisterService {
 			issue.setDepartment(department);
 			issue.setLastUpdatedDate(calendar);
 			issue.setStatus(Status.ASSIGNED);
-			
 			issueDetail.setCreateDate(calendar);
 			issueDetail.setUser(user);
 			issueDetail.setStatus(Status.ASSIGNED);
 			issue.addDetail(issueDetail);
-			
-			if(!depAdmins.isEmpty()) {
+
+			if (!depAdmins.isEmpty()) {
 				User takenAdmin = depAdmins.get(0);
 				int cases = issueDao.getIssuesByAdminId(takenAdmin).size();
-				for(User admin : depAdmins) {
-					if(issueDao.getIssuesByAdminId(admin).size() < cases) {
+				for (User admin : depAdmins) {
+					if (issueDao.getIssuesByAdminId(admin).size() < cases) {
 						takenAdmin = admin;
 						cases = issueDao.getIssuesByAdminId(admin).size();
 					}
 				}
 				issue.setAdmin(takenAdmin);
 			}
-			
+
 			issueDao.addIssue(issue);
-			req.setAttribute("message", "Issue created successful");
+			req.setAttribute("message", "Issue created successfully");
 			result = "dashboard/customer";
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 
 	 * @param req

@@ -1,6 +1,5 @@
 package com.fdmgroup.Services;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -141,7 +140,6 @@ public class IssueRegisterServiceTest {
 		order.verify(issue).setStatus(Status.ASSIGNED);
 		order.verify(issueDetail).setCreateDate(calendar);
 		order.verify(issueDetail).setUser(user);
-		order.verify(issueDetail).setStatus(Status.ASSIGNED);
 		order.verify(issue).addDetail(issueDetail);
 		order.verify(issueDao).addIssue(issue);
 		order.verify(req).setAttribute("message", "Issue created successful");
@@ -186,7 +184,6 @@ public class IssueRegisterServiceTest {
 		order.verify(issue).setStatus(Status.ASSIGNED);
 		order.verify(issueDetail).setCreateDate(calendar);
 		order.verify(issueDetail).setUser(user);
-		order.verify(issueDetail).setStatus(Status.ASSIGNED);
 		order.verify(issue).addDetail(issueDetail);
 		order.verify(issue).setAdmin(admin);
 		order.verify(issueDao).addIssue(issue);
