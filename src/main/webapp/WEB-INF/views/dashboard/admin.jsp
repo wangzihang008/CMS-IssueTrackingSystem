@@ -10,23 +10,23 @@
 <title>General Admin Dashboard</title>
 </head>
 <body>
-	<div>
-		<a href="/issue/register/">Register New Issue</a>
-	</div>
+<!-- 	<div> -->
+<!-- 		<a href="/issue/register/">Register New Issue</a> -->
+<!-- 	</div> -->
 	<div>
 		<h4>All Issues</h4>
 		<c:if test="${issues == null}">
 			<p>There is no issue</p>
 		</c:if>
 		<table>
-		<thead>
-		<tr>
-			<td>Issue ID</td>
-			<td>Issue Title</td>
-			<td>Issue Create Date</td>
-			<td>Issue Status</td>
-		</tr>
-		</thead>
+			<thead>
+				<tr>
+					<td>Issue ID</td>
+					<td>Issue Title</td>
+					<td>Issue Create Date</td>
+					<td>Issue Status</td>
+				</tr>
+			</thead>
 			<c:forEach items="${issues}" var="item">
 				<tr>
 					<td>${item.id}</td>
@@ -36,6 +36,28 @@
 					<td><a href="issue/detail/${item.id}">Details</a></td>
 				</tr>
 			</c:forEach>
+		</table>
+	</div>
+	<div>
+		<h4>All Unassigned Issues</h4>
+		<table>
+			<thead>
+				<tr>
+					<td>Issue ID</td>
+					<td>Issue Title</td>
+					<td>Issue Create Date</td>
+					<td>Issue Status</td>
+				</tr>
+				<c:forEach items="${issues}" var="item">
+					<c:if test="${item.status == 'UNASSIGNED'}">
+						<td>${item.id}</td>
+						<td>${item.title}</td>
+						<td>${item.createDate.time}</td>
+						<td>${item.status}</td>
+						<td><a href="issue/reassign">assign</a></td>
+					</c:if>
+				</c:forEach>
+			</thead>
 		</table>
 	</div>
 </body>
