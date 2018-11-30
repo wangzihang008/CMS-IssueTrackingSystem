@@ -13,7 +13,7 @@
 </head>
 <body>
 	
-	<h1>Welcome ${active_user}</h1>
+	<h1>Welcome ${active_user}</h1><a href="/IssueTrackingSystem/logout">Logout</a>
 	
 	<span style="color: red;">${msg}</span>
 	

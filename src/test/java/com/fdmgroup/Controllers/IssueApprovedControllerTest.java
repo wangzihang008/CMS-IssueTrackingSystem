@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import com.fdmgroup.DAO.IssueDAO;
+import com.fdmgroup.DAO.IssueDetailDAO;
 import com.fdmgroup.DAO.UserDAO;
 import com.fdmgroup.Entities.Issue;
 import com.fdmgroup.Entities.User;
@@ -28,6 +29,9 @@ public class IssueApprovedControllerTest {
 	
 	@Mock
 	private UserDAO userDAO;
+	
+	@Mock
+	private IssueDetailDAO issueDetailDAO;
 	
 	@Mock
 	private User user;
@@ -44,7 +48,7 @@ public class IssueApprovedControllerTest {
 	}
 
 	@Test
-	public void IssueApprovedController() {
+	public void Given_IssueApprovedController_When_approve_Then_returnDashboardCustomerJspPage() {
 		Issue issue = mock(Issue.class);
 		HttpServletRequest request = mock(HttpServletRequest.class);
 		HttpSession session = mock(HttpSession.class);

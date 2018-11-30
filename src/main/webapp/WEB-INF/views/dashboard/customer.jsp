@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<a href="/IssueTrackingSystem/logout">Logout</a>
 	<table>
 		<tr>
 			<td>issue ID</td>
