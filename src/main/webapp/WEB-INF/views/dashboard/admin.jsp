@@ -48,7 +48,30 @@
 			</c:forEach>
 		</table>
 	</div>
+	
 	<span style="color: red;">${reassignMsg}<a
 		href="/IssueTrackingSystem/dashboard/admin">Back to dashboard</a></span>
+	<div>
+		<h4>All Unassigned Issues</h4>
+		<table>
+			<thead>
+				<tr>
+					<td>Issue ID</td>
+					<td>Issue Title</td>
+					<td>Issue Create Date</td>
+					<td>Issue Status</td>
+				</tr>
+				<c:forEach items="${issues}" var="item">
+					<c:if test="${item.status == 'UNASSIGNED'}">
+						<td>${item.id}</td>
+						<td>${item.title}</td>
+						<td>${item.createDate.time}</td>
+						<td>${item.status}</td>
+						<td><a href="issue/reassign">assign</a></td>
+					</c:if>
+				</c:forEach>
+			</thead>
+		</table>
+	</div>
 </body>
 </html>
