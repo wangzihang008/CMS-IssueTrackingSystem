@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -88,5 +89,60 @@ public class UserDAOTest {
 		order.verify(query).getResultList();
 		order.verify(mockEm).close();
 		assertEquals(result, mockResult);
+	}
+	
+	@Test
+	public void get_user_by_usernmae_given_user_exists_return_user() {
+		EntityManager mockEm = mock(EntityManager.class);
+		EntityTransaction mockEt = mock(EntityTransaction.class);
+//		List<User> mockList = mock(List.class);
+		List<User> mockList = new ArrayList<User>();
+		User mockUser = mock(User.class);
+		mockList.add(mockUser);
+		TypedQuery<User> mockQuery = mock(TypedQuery.class);
+		
+		when(mockEmf.createEntityManager()).thenReturn(mockEm);
+		when(mockEm.getTransaction()).thenReturn(mockEt);
+		when(mockEm.createQuery("SELECT u FROM User AS u WHERE u.username=:username", User.class)).thenReturn(mockQuery);
+		when(mockQuery.getResultList()).thenReturn(mockList);
+//		when(mockList.get(0)).thenReturn(mockUser);
+		User user = userDAO.get("abc");
+		
+		
+		
+		verify(mockEmf).createEntityManager();
+		verify(mockQuery).setParameter("username", "abc");
+		verify(mockQuery).getResultList();
+		verify(mockEm).close();
+		assertEquals(mockUser, user);
+		
+		
+	}
+	@Test
+	public void get_user_by_usernmae_given_user_does_not_exists_return_user() {
+		EntityManager mockEm = mock(EntityManager.class);
+		EntityTransaction mockEt = mock(EntityTransaction.class);
+//		List<User> mockList = mock(List.class);
+		List<User> mockList = new ArrayList<User>();
+//		User mockUser = null;
+//		mockList.add(mockUser);
+		TypedQuery<User> mockQuery = mock(TypedQuery.class);
+		
+		when(mockEmf.createEntityManager()).thenReturn(mockEm);
+		when(mockEm.getTransaction()).thenReturn(mockEt);
+		when(mockEm.createQuery("SELECT u FROM User AS u WHERE u.username=:username", User.class)).thenReturn(mockQuery);
+		when(mockQuery.getResultList()).thenReturn(mockList);
+//		when(mockList.get(0)).thenReturn(mockUser);
+		User user = userDAO.get("abc");
+		
+		
+		
+		verify(mockEmf).createEntityManager();
+		verify(mockQuery).setParameter("username", "abc");
+		verify(mockQuery).getResultList();
+		verify(mockEm).close();
+		assertEquals(null, user);
+		
+		
 	}
 }
