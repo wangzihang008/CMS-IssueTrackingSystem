@@ -20,7 +20,7 @@ import org.springframework.ui.Model;
 import com.fdmgroup.DAO.IssueDAO;
 import com.fdmgroup.Entities.Issue;
 
-public class DashboardCustomerTest {
+public class DashBoardCustomerTest {
 
 	@Mock
 	private IssueDAO issueDAO;
