@@ -11,7 +11,7 @@
 </head>
 <body>
 	<div>
-		<h4>All Issues</h4>
+		<h4>All Issues</h4><a href="/IssueTrackingSystem/logout">Logout</a>
 		<c:if test="${issues == null}">
 			<p>There is no issue</p>
 		</c:if>
