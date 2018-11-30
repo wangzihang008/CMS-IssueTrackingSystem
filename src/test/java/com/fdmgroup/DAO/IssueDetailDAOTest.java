@@ -6,9 +6,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +21,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import com.fdmgroup.Entities.Issue;
 import com.fdmgroup.Entities.IssueDetail;
 
 public class IssueDetailDAOTest {
@@ -63,6 +68,27 @@ public class IssueDetailDAOTest {
 		InOrder order = inOrder(mockEmf, mockEm);
 		order.verify(mockEmf).createEntityManager();
 		order.verify(mockEm).find(IssueDetail.class, 100L);
+		order.verify(mockEm).close();
+	}
+	
+	@Test
+	public void When_getIssueDetailsByIssue_Given_Issue_Then_returnListOfIssueDetails() {
+		Issue issue = mock(Issue.class);
+		long issueId = 123;
+		when(issue.getId()).thenReturn(issueId);
+		String strQuery = "SELECT d FROM IssueDetail d WHERE issue_id = '" + issue.getId() + "'";
+		TypedQuery<IssueDetail> query = mock(TypedQuery.class);
+		when(mockEm.createQuery(strQuery, IssueDetail.class)).thenReturn(query);
+		ArrayList<IssueDetail> details = new ArrayList<IssueDetail>();
+		when(query.getResultList()).thenReturn(details);
+		
+		IssueDetailDAO.getIssueDetailsByIssue(issue);
+		
+		InOrder order = inOrder(mockEmf, mockEm, issue, query);
+		order.verify(mockEmf).createEntityManager();
+		order.verify(issue).getId();
+		order.verify(mockEm).createQuery(strQuery, IssueDetail.class);
+		order.verify(query).getResultList();
 		order.verify(mockEm).close();
 	}
 }
