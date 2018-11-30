@@ -25,15 +25,19 @@
 		factory-method="createEntityManagerFactory">
 		<constructor-arg value="EMF" />
 	</bean>
+
 	<bean id="userDAOBean" class="com.fdmgroup.DAO.UserDAO" />
-	<bean id="issueDAOBean" class="com.fdmgroup.DAO.IssueDAO" />
-	<bean id="issueDetailDAOBean" class="com.fdmgroup.DAO.IssueDetailDAO" />
+
 	<bean id="departmentDAOBean" class="com.fdmgroup.DAO.DepartmentDAO" />
 
+	<bean id="issueDAOBean" class="com.fdmgroup.DAO.IssueDAO" />
+
+	<bean id="issueDetailDAOBean" class="com.fdmgroup.DAO.IssueDetailDAO" />
+
 	<bean id="adminDashboardServiceBean" class="com.fdmgroup.Services.AdminDashboardService" />
-	
+
 	<bean id="customerIssueRegisterBean" class="com.fdmgroup.Services.IssueRegisterService" />
-	
+
 	<bean id="IssueUpdateCustomerServiceBean" class="com.fdmgroup.Services.IssueUpdateCustomerService" />
 	
 	<bean id="issueBean" class="com.fdmgroup.Entities.Issue"/>
@@ -41,4 +45,9 @@
 	<bean id="issueDetailBean" class="com.fdmgroup.Entities.IssueDetail" scope="prototype"/>
 	
 	<bean id="calendarBean" class="java.util.Calendar" factory-method="getInstance" scope="prototype"/>
+
+	<bean id="issueDetailServiceBean" class="com.fdmgroup.Services.IssueDetailService" />
+
+	<bean id="issueReassignServiceBean" class="com.fdmgroup.Services.IssueReassignService" />
+
 </beans>

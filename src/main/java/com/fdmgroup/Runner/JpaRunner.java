@@ -1,20 +1,10 @@
-package runner;
+package com.fdmgroup.Runner;
 
-import java.util.Calendar;
-import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import com.fdmgroup.DAO.DepartmentDAO;
-import com.fdmgroup.DAO.IssueDAO;
-import com.fdmgroup.DAO.IssueDetailDAO;
 import com.fdmgroup.DAO.UserDAO;
 import com.fdmgroup.Entities.Department;
-import com.fdmgroup.Entities.Issue;
-import com.fdmgroup.Entities.IssueDetail;
 import com.fdmgroup.Entities.User;
 import com.fdmgroup.Enum.Status;
 import com.fdmgroup.Enum.Type;
@@ -42,13 +32,7 @@ public class JpaRunner {
 		uDao.addUser(u2);
 		uDao.addUser(u3);
 		uDao.addUser(u4);
-		uDao.addUser(u5);
-		
-
-
-		
-		
-		
+		uDao.addUser(u5);	
 
 	}
 

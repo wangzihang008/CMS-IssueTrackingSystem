@@ -1,8 +1,5 @@
 package com.fdmgroup.DAO;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +14,6 @@ import com.fdmgroup.Entities.User;
 
 public class UserDAO {
 
-	Connection conn = null;
-	private static final String UPDATE = "UPDATE USERS SET username=?, password=?, type=?, status=?, department=?, firstName=?, lastName=?, issues=? WHERE id=?";
-
 	@Resource(name = "emfBean")
 	private EntityManagerFactory emf;
 
@@ -28,7 +22,6 @@ public class UserDAO {
 	}
 
 	public UserDAO() {
-
 	}
 
 	public EntityManagerFactory getEmf() {
@@ -50,7 +43,7 @@ public class UserDAO {
 		em.close();
 		return returnedUser;
 	}
-	
+
 	public User get(String username) {
 		EntityManager em = emf.createEntityManager();
 
@@ -59,42 +52,22 @@ public class UserDAO {
 		List<User> user = query.getResultList();
 		if (user.size() > 0) {
 			em.close();
-            return user.get(0);
-        } else {
-        	em.close();
-            return null;
-        }
-	}
-
-	public void updateUser(User user) {
-		try {
-			PreparedStatement ps = conn.prepareStatement(UPDATE);
-
-			ps.setString(1, user.getUsername());
-			ps.setString(2, user.getPassword());
-			ps.setInt(3, user.getType().ordinal());
-			ps.setInt(4, user.getStatus().ordinal());
-			ps.setLong(5, user.getDepartment().getId());
-			ps.setString(6, user.getFirstName());
-			ps.setString(7, user.getLastName());
-			// issue column needs further implementation
-			ps.executeUpdate();
-			ps.close();
-			System.out.println("User with id " + user.getId() + " was updated in DataBase with following details: "
-					+ user.toString());
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			return user.get(0);
+		} else {
+			em.close();
+			return null;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param depId
 	 * @return return all admins who work in the department with department id
 	 */
-	public ArrayList<User> getUserByDep(Department department){
+	public ArrayList<User> getUserByDep(Department department) {
 		EntityManager em = emf.createEntityManager();
-		TypedQuery<User> query = (TypedQuery<User>) em.createQuery("select u from User u where u.department=:department");
+		TypedQuery<User> query = (TypedQuery<User>) em
+				.createQuery("select u from User u where u.department=:department");
 		query.setParameter("department", department);
 		ArrayList<User> result = (ArrayList<User>) query.getResultList();
 		em.close();

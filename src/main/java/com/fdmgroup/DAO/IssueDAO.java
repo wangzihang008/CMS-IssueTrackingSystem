@@ -61,6 +61,7 @@ public class IssueDAO {
 		String str = "select i from Issue i";
 		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
 		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
 		return result;
 	}
 
@@ -80,15 +81,25 @@ public class IssueDAO {
 		return result;
 	}
 
+	public ArrayList<Issue> getIssuesByUserId(long userId) {
+		EntityManager em = emf.createEntityManager();
+
+		String str = "select i from Issue i WHERE user_id = " + userId;
+		TypedQuery<Issue> query = (TypedQuery<Issue>) em.createQuery(str);
+		ArrayList<Issue> result = (ArrayList<Issue>) query.getResultList();
+		em.close();
+		return result;
+	}
+	
 	public List<Issue> getAssignedIssuesByDepartment(Department department) {
 
 		EntityManager em = emf.createEntityManager();
-		Query query = em.createQuery("SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1",
-				Issue.class);
+		Query query = em.createQuery(
+				"SELECT i FROM Issue i WHERE department_id = '" + department.getId() + "' AND status = 1", Issue.class);
 		List<Issue> issues = query.getResultList();
 		return issues;
 	}
-	
+
 	public void update(Issue issue) {
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
@@ -98,18 +109,29 @@ public class IssueDAO {
 		issue1.setDepartment(issue.getDepartment());
 		issue1.setLastUpdatedDate(issue.getLastUpdatedDate());
 		issue1.setStatus(issue.getStatus());
-		issue1.setDetails(issue.getDetails());
+//		issue1.setDetails(issue.getDetails());
 		et.commit();
 		em.close();
 	}
 
 	public void changeStatus(Issue issue, Status status) {
-		
+
 		EntityManager em = emf.createEntityManager();
 		EntityTransaction et = em.getTransaction();
 		Issue accessedIssue = em.find(Issue.class, issue.getId());
 		et.begin();
 		accessedIssue.setStatus(status);
+		et.commit();
+		em.close();
+	}
+
+	public void reassignHelper(Issue issue, Department department, User admin) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction et = em.getTransaction();
+		Issue accessedIssue = em.find(Issue.class, issue.getId());
+		et.begin();
+		accessedIssue.setDepartment(department);
+		accessedIssue.setAdmin(admin);
 		et.commit();
 		em.close();
 	}

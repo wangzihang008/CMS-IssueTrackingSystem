@@ -13,6 +13,7 @@ public class AdminDashboardServiceTest {
 	
 	@Mock
 	private IssueDAO issueDao;
+	
 	@InjectMocks
 	private AdminDashboardService ads = new AdminDashboardService();
 	

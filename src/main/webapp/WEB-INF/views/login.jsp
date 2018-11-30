@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h2>Login here</h2>
-	<sf:form action = "/IssueTrackingSystem/login" method = "Post" modelAttribute = "blank_user_login">
+	<sf:form action = "${pageContext.request.contextPath}/login" method = "Post" modelAttribute = "blank_user_login">
 		Username: <sf:input path = "username" type = "text" />
 		Password: <sf:input path = "password" type = "password" />
 		<input type = "submit" value = "login!"/>

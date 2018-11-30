@@ -1,6 +1,5 @@
 package com.fdmgroup.Controllers;
 
-import org.springframework.http.HttpRequest;
 import org.springframework.ui.Model;
 
 import com.fdmgroup.Entities.Issue;
@@ -28,12 +27,12 @@ public class AdminDashboardControllerTest {
 	private AdminDashboardService ads;
 	@InjectMocks
 	private AdminDashboardController adc = new AdminDashboardController();
-	
+
 	@Before
 	public void startInjectionMock() {
 		MockitoAnnotations.initMocks(this);
 	}
-	
+
 	@Test
 	public void When_AdminDashboardController_Given_goToAdminDashboardWithIssuesEmpty_Then_returnAdminDashboardJspPage() {
 		Model model = mock(Model.class);

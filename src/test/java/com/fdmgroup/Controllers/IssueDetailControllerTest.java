@@ -1,7 +1,6 @@
 package com.fdmgroup.Controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,25 +9,31 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 
 import com.fdmgroup.DAO.IssueDAO;
+import com.fdmgroup.Services.IssueDetailService;
+import com.fdmgroup.Controllers.IssueDetailController;
 
 public class IssueDetailControllerTest {
 
 	@Mock
-	private IssueDAO iDao;
+	private IssueDetailService mockIssueDetailSerice;
+
+	@Mock
+	private IssueDAO mockIssueDAO;
+
+	@Mock
+	private Model mockModel;
 
 	@InjectMocks
 	private IssueDetailController idc = new IssueDetailController();
 
 	@Before
-	public void startInjectMocks() {
+	public void startInjectionMock() {
 		MockitoAnnotations.initMocks(this);
 	}
 
 	@Test
-	public void return_GoToIssueDetail() {
-		Model mockModel = mock(Model.class);
-		String nextPage = idc.goToIssueDetail(mockModel);
-		assertEquals("issue/detail", nextPage);
+	public void Given_issueDetailController_When_goToIssueDetail_Then_returnDetailJspPage() {
+		String nextPage = idc.goToIssueDetail(2, mockModel);
+		assertEquals(nextPage, "issue/detail");
 	}
-
 }

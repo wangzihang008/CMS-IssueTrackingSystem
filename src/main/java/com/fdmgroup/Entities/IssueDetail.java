@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import com.fdmgroup.Enum.Status;
 
 @Entity
@@ -25,8 +26,6 @@ public class IssueDetail {
 	private String content;
 
 	private Calendar createDate;
-	
-	private Status status;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "USER_ID")
@@ -35,6 +34,8 @@ public class IssueDetail {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ISSUE_ID")
 	private Issue issue;
+	
+	private Status status;
 
 	public IssueDetail(String content, Calendar createDate, User user, Issue issue) {
 		super();

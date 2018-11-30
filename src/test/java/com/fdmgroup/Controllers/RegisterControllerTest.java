@@ -10,29 +10,25 @@ import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
-import javax.persistence.EntityManagerFactory;
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.ui.Model;
 
 import com.fdmgroup.DAO.UserDAO;
 import com.fdmgroup.Entities.User;
 
 public class RegisterControllerTest {
-	
-	@Mock 
+
+	@Mock
 	private UserDAO uDao;
-	
+
 	@Mock
 	private Model mockModel;
-	
+
 	@InjectMocks
 	private RegisterController rc = new RegisterController();
-	
+
 	@Before
 	public void startInjectMocks() {
 		MockitoAnnotations.initMocks(this);
-		
 	}
 
 	@Test
@@ -46,7 +42,7 @@ public class RegisterControllerTest {
 
 	@Test
 	public void given_registerRequest_when_passwordIsEmpty_then_goesToFailure() {
-		
+
 		User mockUser = mock(User.class);
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("");
@@ -55,12 +51,11 @@ public class RegisterControllerTest {
 
 		verify(mockModel).addAttribute("fail_msg", "Invalid username or user has existed");
 		assertEquals("register", nextPage);
-
 	}
 
 	@Test
 	public void given_registerRequest_when_usernameAlreadyExists_then_goesToFailure() {
-		
+
 		User mockUser = mock(User.class);
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
@@ -69,11 +64,11 @@ public class RegisterControllerTest {
 
 		verify(mockModel).addAttribute("fail_msg", "Invalid username or user has existed");
 		assertEquals("register", nextPage);
-
 	}
 
 	@Test
 	public void given_registerRequest_when_usernameIsBlank_then_goesToFailure() {
+		
 		User mockUser = mock(User.class);
 		when(mockUser.getUsername()).thenReturn("");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
@@ -83,21 +78,17 @@ public class RegisterControllerTest {
 		verify(mockModel).addAttribute("fail_msg", "Invalid username or user has existed");
 		assertEquals("register", nextPage);
 	}
-	
+
 	@Test
 	public void given_username_does_not_Exist_then_add_user_to_database() {
-		
+
 		User mockUser = mock(User.class);
 		when(mockUser.getUsername()).thenReturn("ExampleName");
 		when(mockUser.getPassword()).thenReturn("ExamplePassword");
 		when(uDao.get("ExampleName")).thenReturn(null);
 		String nextPage = rc.Register(mockUser, mockModel);
 
-
 		assertEquals("index", nextPage);
-
 	}
-
-	
 
 }

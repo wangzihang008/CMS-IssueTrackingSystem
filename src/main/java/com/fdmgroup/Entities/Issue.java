@@ -53,18 +53,17 @@ public class Issue {
 	@JoinColumn(name = "DEPARTMENT_ID")
 	private Department department;
 
-	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "issue", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Column(name = "USER_ISSUE_DETAILS")
 	private List<IssueDetail> details = new ArrayList<>();
 
-	public Issue(String title, Status status, Calendar createDate, int priority, Calendar lastUpdatedDate, User admin,
-			User createUser, Department department) {
+	public Issue(String title, Status status, Calendar createDate, int priority, User admin, User createUser,
+			Department department) {
 		super();
 		this.title = title;
 		this.status = status;
 		this.createDate = createDate;
 		this.priority = priority;
-		this.lastUpdatedDate = lastUpdatedDate;
 		this.admin = admin;
 		this.createUser = createUser;
 		this.department = department;
@@ -76,9 +75,7 @@ public class Issue {
 
 	@Override
 	public String toString() {
-
-		return "Issue id: "+ id + ", " + title;
-
+		return "Issue id: " + id + ", " + title;
 	}
 
 	public long getId() {
@@ -111,6 +108,14 @@ public class Issue {
 
 	public void setCreateDate(Calendar createDate) {
 		this.createDate = createDate;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 
 	public Calendar getLastUpdatedDate() {
@@ -161,14 +166,6 @@ public class Issue {
 	public void removeDetail(IssueDetail detail) {
 		details.remove(detail);
 		detail.setIssue(null);
-	}
-
-	public int getPriority() {
-		return priority;
-	}
-
-	public void setPriority(int priority) {
-		this.priority = priority;
 	}
 
 }
